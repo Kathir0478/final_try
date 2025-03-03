@@ -2,6 +2,7 @@ const User = require('./models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
+const axios = require('axios')
 
 async function login(req, res) {
     try {
@@ -56,6 +57,7 @@ async function getdata(req, res) {
 
 async function update(req, res) {
     try {
+        const api = "http://127.0.0.1:5001/getworkout"
         if (!req.user || !req.user.id) {
             return res.status(403).json({ "message": "Access denied. No token provided." });
         }
@@ -64,7 +66,11 @@ async function update(req, res) {
         if (!data) {
             return res.status(404).json({ "message": "User not found. Update failed." });
         }
-        return res.status(200).json({ "message": "User data updated successfully.", "updatedData": data });
+        const workout = await axios.post(api, req.body)
+        const workoutPlan = workout.data.workout_plan;
+        const insert = await User.findByIdAndUpdate(userId, { $set: { workout_plan: workoutPlan } }, { new: true, upsert: false });
+
+        return res.status(200).json({ "message": "User data updated successfully.", "updatedData": data, "workout": workout.data.workout_plan });
     } catch (error) {
         return res.status(500).json({ "message": "Internal Server Error", "error": error.message });
     }

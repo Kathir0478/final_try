@@ -11,7 +11,8 @@ const user = new mongoose.Schema({
     goal: { type: String },
     duration: { type: Number },
     frequency: { type: Number },
-    description: { type: String }
+    description: { type: String },
+    workout_plan: { type: Object }
 })
 
 module.exports = mongoose.model("User", user)

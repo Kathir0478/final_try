@@ -30,42 +30,39 @@ const Updatedata = () => {
         fetchdata()
     }, [])
     function validate() {
-        if (moddata.name.length < 4 || moddata.name.length > 20) {
-            alert("The name must be of valid length")
-            moddata.name = userdata.name
+        if (Number(moddata.age) < 18 || Number(moddata.age) > 100) {
+            alert("Enter valid age");
+            return false;
         }
-        if (moddata.age < 18 || moddata.age > 100) {
-            alert("Enter valid age")
-            moddata.age = userdata.age
+        if (Number(moddata.height) < 50 || Number(moddata.height) > 300) {
+            alert("Enter valid height");
+            return false;
         }
-        if (moddata.height < 50 || moddata.height > 300) {
-            alert("Enter valid height")
-            moddata.height = userdata.height
+        if (Number(moddata.weight) < 20 || Number(moddata.weight) > 300) {
+            alert("Enter valid weight");
+            return false;
         }
-        if (moddata.weight < 20 || moddata.weight > 300) {
-            alert("Enter valid weight")
-            moddata.weight = userdata.weight
+        if (Number(moddata.duration) < 1 || Number(moddata.duration) > 24) {
+            alert("Enter valid duration");
+            return false;
         }
-        if (moddata.duration < 1 || moddata.duration > 24) {
-            alert("Enter valid duration")
-            moddata.duration = userdata.duration
+        if (Number(moddata.frequency) < 1 || Number(moddata.frequency) > 7) {
+            alert("Enter valid frequency");
+            return false;
         }
-        if (moddata.frequency < 1 || moddata.frequency > 7) {
-            alert("Enter valid frequency")
-            moddata.frequency = userdata.frequency
-        }
-
+        return true;
     }
     const handleChange = (event) => {
         setmoddata({ ...moddata, [event.target.name]: event.target.value })
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
-        validate()
-        const user = await axios.post(setapi, moddata, {
-            headers: { Authorization: token }
-        })
-        await fetchdata()
+        if (validate()) {
+            const user = await axios.post(setapi, moddata, {
+                headers: { Authorization: token }
+            })
+            navigate('/')
+        }
     }
     return (
         <div>

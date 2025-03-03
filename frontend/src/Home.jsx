@@ -25,7 +25,9 @@ const Home = () => {
     console.log(user)
     return (
         <div className='flex gap-10 justify-end p-10 relative'>
-            {user ? <button onClick={() => { navigate('/updatedata') }}><p>Update details</p></button> : <p>Login to continue</p>}
+
+            {user ? <button onClick={() => { navigate('/updatedata') }}><p>Update details</p></button> : <p></p>}
+            {user ? <button onClick={() => { navigate('/workoutplan') }}><p>Get workout plan</p></button> : <p></p>}
             {user ?
                 (<div className='relative'>
                     <button onClick={() => { showOptions(!options) }}>
