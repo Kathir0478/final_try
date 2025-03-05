@@ -31,7 +31,8 @@ const Workouts = () => {
     const [workouts, setWorkouts] = useState({})
     const [selected, setSelected] = useState(-1)
     const token = localStorage.getItem("token")
-    const api = "http://localhost:5000/api/getdata"
+    const base_api="https://final-try-backend.onrender.com"
+    const api = `${base_api}/api/getdata`
     const fetchdata = async () => {
         try {
             const user = await axios.get(api, {
