@@ -6,7 +6,8 @@ const Profile = () => {
     const navigate = useNavigate()
     const [userData, setUserData] = useState({})
     const token = localStorage.getItem('token')
-    const getapi = "http://localhost:5000/api/getdata"
+    const base_api="https://final-try-backend.onrender.com"
+    const getapi = `${base_api}/api/getdata`
     async function fetchdata() {
         try {
             const user = await axios.get(getapi, {
