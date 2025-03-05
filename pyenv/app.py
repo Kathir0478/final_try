@@ -13,7 +13,7 @@ load_dotenv()
 api_key = os.getenv("GEN_AI_KEY")
 genai.configure(api_key=api_key)
 
-@app.route('/getworkout', methods=['POST'])
+@app.route('/', methods=['POST'])
 def fetch():
     req = request.get_json()
     if not req:
