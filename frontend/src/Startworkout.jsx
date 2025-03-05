@@ -9,8 +9,9 @@ const Startworkout = () => {
     const plan = location.state || []
     const [count, setCount] = useState(-1)
     const token = localStorage.getItem("token")
-    const getapi = "http://localhost:5000/api/getdata"
-    const updateapi = "http://localhost:5000/api/update"
+    const base_api="https://final-try-backend.onrender.com"
+    const getapi = `${base_api}/api/getdata`
+    const updateapi = `${base_api}/api/update`
     async function fetchdata() {
         try {
             const user = await axios.get(getapi, {
