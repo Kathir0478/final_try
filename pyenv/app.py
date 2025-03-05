@@ -13,6 +13,11 @@ load_dotenv()
 api_key = os.getenv("GEN_AI_KEY")
 genai.configure(api_key=api_key)
 
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({"message": "Service is running!"}), 200
+
+
 @app.route('/', methods=['POST'])
 def fetch():
     req = request.get_json()
