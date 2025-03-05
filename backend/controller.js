@@ -68,19 +68,11 @@ async function update(req, res) {
         if (!data) {
             return res.status(404).json({ "message": "User not found. Update failed." });
         }
-        let workoutPlan;
-        try {
-            const workout = await axios.post(api, req.body);
-            workoutPlan = workout.data.workout_plan;
-        } catch (axiosError) {
-            return res.status(500).json({
-                "message": "Failed to generate workout plan.",
-                "error": axiosError.response ? axiosError.response.data : axiosError.message
-            });
-        }
+        const workout = await axios.post(api, req.body)
+        const workoutPlan = workout.data.workout_plan;
         const insert = await User.findByIdAndUpdate(userId, { $set: { workout_plan: workoutPlan } }, { new: true, upsert: false });
 
-        return res.status(200).json({ "message": "User data updated successfully.", "updatedData": data, "workout": workout.data.workout_plan });
+        return res.status(200).json({ "message": "User data updated successfully.", "updatedData": data });
     } catch (error) {
         return res.status(500).json({ "message": "Internal Server Error", "error": error.message });
     }
