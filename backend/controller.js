@@ -59,7 +59,7 @@ async function getdata(req, res) {
 
 async function update(req, res) {
     try {
-        const api = "http://127.0.0.1:5001/getworkout"
+        const api = "https://final-try-pyenv.onrender.com"
         if (!req.user || !req.user.id) {
             return res.status(403).json({ "message": "Access denied. No token provided." });
         }
@@ -68,8 +68,16 @@ async function update(req, res) {
         if (!data) {
             return res.status(404).json({ "message": "User not found. Update failed." });
         }
-        const workout = await axios.post(api, req.body)
-        const workoutPlan = workout.data.workout_plan;
+        let workoutPlan;
+        try {
+            const workout = await axios.post(api, req.body);
+            workoutPlan = workout.data.workout_plan;
+        } catch (axiosError) {
+            return res.status(500).json({
+                "message": "Failed to generate workout plan.",
+                "error": axiosError.response ? axiosError.response.data : axiosError.message
+            });
+        }
         const insert = await User.findByIdAndUpdate(userId, { $set: { workout_plan: workoutPlan } }, { new: true, upsert: false });
 
         return res.status(200).json({ "message": "User data updated successfully.", "updatedData": data, "workout": workout.data.workout_plan });
