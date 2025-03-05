@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom'
 const Home = () => {
     const [user, setUser] = useState("")
     const navigate = useNavigate()
-    const api = "http://localhost:5000/api/getdata"
+    const base_api="https://final-try-backend.onrender.com"
+    const api = `${base_api}/api/getdata`
     const token = localStorage.getItem("token")
     async function fetchData() {
         const result = await axios.get(api, {
