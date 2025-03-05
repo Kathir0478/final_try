@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 const Home = () => {
     const [user, setUser] = useState("")
     const navigate = useNavigate()
-    const [options, showOptions] = useState(false)
     const api = "http://localhost:5000/api/getdata"
     const token = localStorage.getItem("token")
     async function fetchData() {
@@ -25,24 +24,17 @@ const Home = () => {
     console.log(user)
     return (
         <div className='flex gap-10 justify-end p-10 relative'>
-
-            {user ? <button onClick={() => { navigate('/updatedata') }}><p>Update details</p></button> : <p></p>}
-            {user ? <button onClick={() => { navigate('/workoutplan') }}><p>Get workout plan</p></button> : <p></p>}
+            {user && <button onClick={() => { navigate('/workoutplan') }}><p>Start Workout</p></button>}
+            {user && <button onClick={() => { navigate('/updatedata') }}><p>Update details</p></button>}
+            {user && <button onClick={() => { navigate('/workoutplan') }}><p>Get workout plan</p></button>}
+            {user && <button onClick={() => { navigate("/profile") }}><p>{user}</p></button>}
             {user ?
-                (<div className='relative'>
-                    <button onClick={() => { showOptions(!options) }}>
-                        <p>{user}</p>
-                    </button>
-                    {options &&
-                        <div className='py-5 absolute'>
-                            <button onClick={logout}><p>Logout</p></button>
-                        </div>
-                    }
-                </div>
-                )
+                <button onClick={logout}><p>Logout</p></button>
                 :
-                (<button onClick={() => { navigate("/login") }}><p>Login/Signup</p></button>)
-            }
+                <div className='flex gap-10'>
+                    <button onClick={() => { navigate('/login') }}><p>Login</p></button>
+                    <button onClick={() => { navigate('/signup') }}><p>Signup</p></button>
+                </div>}
         </div>
     )
 }

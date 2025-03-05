@@ -7,6 +7,8 @@ import Updatedata from './Updatedata'
 import Setdata from './Setdata'
 import Accessdenied from './Accessdenied'
 import Workouts from './Workouts'
+import Startworkout from './Startworkout'
+import Profile from './Profile'
 const App = () => {
     return (
         <BrowserRouter>
@@ -18,6 +20,8 @@ const App = () => {
                 <Route path='/setdata' element={<Setdata />} />
                 <Route path='/error' element={<Accessdenied />} />
                 <Route path='/workoutplan' element={<Workouts />} />
+                <Route path='/session' element={<Startworkout />} />
+                <Route path='/profile' element={<Profile />} />
             </Routes>
         </BrowserRouter>
     )

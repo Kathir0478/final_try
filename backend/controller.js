@@ -24,15 +24,17 @@ async function login(req, res) {
 
 async function signup(req, res) {
     try {
-        const data = req.body;
+        let data = req.body;
         const isNewUser = await User.findOne({ email: data.email });
         if (isNewUser) {
             return res.status(400).json({ "message": "User already exists. Please log in instead." });
         }
         data.password = await bcrypt.hash(data.password, 10);
+        data.progress = 0;
+        data.visits = 0;
         const newUser = await User.create(data);
         const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
-        return res.status(201).json({ "message": "Signup successful", "token": token });
+        return res.status(201).json({ "message": "Signup successful", "token": token, "data": newUser });
     } catch (error) {
         return res.status(500).json({ "message": "Internal Server Error", "error": error.message });
     }
@@ -76,4 +78,23 @@ async function update(req, res) {
     }
 }
 
-module.exports = { login, signup, getdata, update };
+async function progressupdate(req, res) {
+    try {
+        const userId = req.user.id;
+        const reward = req.body.reward || 0;
+        const count = req.body.count || 0
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found. Update failed." });
+        }
+        const updatedProgress = user.progress + reward;
+        const visited = user.visits + count;
+        const updatedUser = await User.findByIdAndUpdate(userId, { $set: { progress: updatedProgress, visits: visited } }, { new: true });
+        return res.status(200).json({ message: "Progress updated successfully.", updatedData: updatedUser });
+    }
+    catch (error) {
+        return res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+}
+
+module.exports = { login, signup, getdata, update, progressupdate };

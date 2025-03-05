@@ -7,7 +7,7 @@ const Updatedata = () => {
     const getapi = "http://localhost:5000/api/getdata"
     const setapi = "http://localhost:5000/api/setdata"
     const [userdata, setUserdata] = useState(null)
-    const [moddata, setmoddata] = useState({ name: "", age: 0, gender: '', height: 0, weight: 0, fitlevel: "", goal: "", duration: 0, frequency: 0, description: "" })
+    const [moddata, setmoddata] = useState({ name: "", age: 0, gender: '', height: 0, weight: 0, fitlevel: "", goal: "", frequency: 0, description: "" })
     const token = localStorage.getItem("token")
 
     async function fetchdata() {
@@ -42,10 +42,6 @@ const Updatedata = () => {
             alert("Enter valid weight");
             return false;
         }
-        if (Number(moddata.duration) < 1 || Number(moddata.duration) > 24) {
-            alert("Enter valid duration");
-            return false;
-        }
         if (Number(moddata.frequency) < 1 || Number(moddata.frequency) > 7) {
             alert("Enter valid frequency");
             return false;
@@ -58,6 +54,7 @@ const Updatedata = () => {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if (validate()) {
+            alert("Data updated succesfully")
             const user = await axios.post(setapi, moddata, {
                 headers: { Authorization: token }
             })
@@ -133,10 +130,6 @@ const Updatedata = () => {
                             </label>
                         </div>
                         <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
-                            <p className='w-42 p-2'>Duration </p>
-                            <input type='number' placeholder={userdata.duration} name='duration' value={moddata.duration} onChange={handleChange} className='p-2 outline-none w-full' />
-                        </div>
-                        <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
                             <p className='w-42 p-2'>Frequency </p>
                             <input type='number' placeholder={moddata.frequency} name='frequency' value={moddata.frequency} onChange={handleChange} className='p-2 outline-none w-full' />
                         </div>
@@ -145,7 +138,10 @@ const Updatedata = () => {
                             <textarea className='outline-none w-full' name='description' value={moddata.description} onChange={handleChange} />
                         </div>
                     </div>
-                    <button type='submit' className='border-2 p-2 rounded-lg border-sky-400'>Update</button>
+                    <div className='flex gap-10'>
+                        <button type='submit' className='border-2 p-2 rounded-lg border-sky-400'>Update</button>
+                        <button onClick={() => { navigate("/workoutplan") }} className='border-2 p-2 rounded-lg border-sky-400'>Start Workout</button>
+                    </div>
                 </form>
             )}
         </div>

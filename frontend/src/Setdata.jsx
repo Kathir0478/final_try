@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom'
 const Setdata = () => {
     const navigate = useNavigate()
     const api = "http://localhost:5000/api/setdata"
-    const [moddata, setmoddata] = useState({ age: "", gender: '', height: "", weight: "", fitlevel: "", goal: "", duration: "", frequency: "", description: "" })
+    const [moddata, setmoddata] = useState({ age: "", gender: '', height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
     const token = localStorage.getItem("token")
     useEffect(() => {
         if (!token) {
             navigate("/error")
         }
-    }, [token, navigate])
+    }, [])
     function validate() {
         if (Number(moddata.age) < 18 || Number(moddata.age) > 100) {
             alert("Enter valid age");
@@ -23,10 +23,6 @@ const Setdata = () => {
         }
         if (Number(moddata.weight) < 20 || Number(moddata.weight) > 300) {
             alert("Enter valid weight");
-            return false;
-        }
-        if (Number(moddata.duration) < 1 || Number(moddata.duration) > 24) {
-            alert("Enter valid duration");
             return false;
         }
         if (Number(moddata.frequency) < 1 || Number(moddata.frequency) > 7) {
@@ -108,10 +104,6 @@ const Setdata = () => {
                                 <option value="Habit Consistency">Build Workout Habit</option>
                             </select>
                         </label>
-                    </div>
-                    <div className='flex items-center border-sky-400 border-2 rounded-lg p-2' >
-                        <p className='w-42 p-2'>Duration </p>
-                        <input type='number' placeholder="Time to spend in a day(hrs)" name='duration' value={moddata.duration} onChange={handleChange} className='p-2 outline-none w-full' required />
                     </div>
                     <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
                         <p className='w-42 p-2'>Frequency </p>

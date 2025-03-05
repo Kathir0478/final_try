@@ -2,16 +2,26 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Card = ({ day, plan }) => {
+const Card = ({ day, plan, index, selected, setSelected }) => {
+    const navigate = useNavigate()
     return (
-        <div>
-            <p>{day}</p>
-            {plan.map((value, index) => (
-                <div>
-                    <h1>{value.exercise}</h1>
-                    <p>-{value.guide}-{value.time}</p>
+        <div className='flex flex-col gap-5 p-10 items-start'>
+            <div className='flex gap-5'>
+                <h1>{day}</h1>
+                <button onClick={() => setSelected(index)}>
+                    {selected === index ? <span onClick={() => { navigate('/session', { state: plan }) }}>Select</span> : "View"}
+                </button>
+            </div>
+            {selected === index && plan.map((value, idx) => (
+                <div key={idx} className='flex flex-col gap-2 px-10 w-full'>
+                    <div className='flex justify-between'>
+                        <h2>{value.exercise}</h2>
+                        <h2>{value.time}</h2>
+                    </div>
+                    <p>{value.guide}</p>
                 </div>
             ))}
+
         </div >
     )
 }
@@ -19,6 +29,7 @@ const Card = ({ day, plan }) => {
 const Workouts = () => {
     const navigate = useNavigate()
     const [workouts, setWorkouts] = useState({})
+    const [selected, setSelected] = useState(-1)
     const token = localStorage.getItem("token")
     const api = "http://localhost:5000/api/getdata"
     const fetchdata = async () => {
@@ -40,17 +51,19 @@ const Workouts = () => {
     useEffect(() => {
         fetchdata()
     }, [])
+    const handleSelect = (index) => {
+        setSelected(prev => prev === index ? -1 : index)
+    }
+    console.log(selected)
     return (
-        <div>
-            {Object.keys(workouts).length > 0 ? (
-                Object.entries(workouts).map(([day, exercises]) => (
-                    <div key={day}>
-                        <Card day={day} plan={exercises} />
-                    </div>
-                ))
-            ) : (
-                <p>Loading workouts...</p>
-            )}
+        <div className='flex flex-col p-10'>
+            <div className='flex justify-between'>
+                <h1>Your workout plan</h1>
+                <button onClick={() => { navigate('/') }}><p>Back to home</p></button>
+            </div>
+            {Object.entries(workouts).map(([day, exercises], index) => (
+                <Card key={index} day={day} plan={exercises} index={index} selected={selected} setSelected={handleSelect} />
+            ))}
         </div>
     )
 }

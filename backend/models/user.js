@@ -9,9 +9,10 @@ const user = new mongoose.Schema({
     weight: { type: Number },
     fitlevel: { type: String },
     goal: { type: String },
-    duration: { type: Number },
     frequency: { type: Number },
     description: { type: String },
+    progress: { type: Number },
+    visits: { type: Number },
     workout_plan: { type: Object }
 })
 

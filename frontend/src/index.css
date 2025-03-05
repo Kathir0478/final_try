@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
-html {
-    background-color: rgba(0, 0, 0, 0);
-    color: black
-}
+/* * {
+    background-color: aquamarine;
+    color: brown
+} */
 
 h1 {
     font-size: xx-large;
@@ -11,8 +11,13 @@ h1 {
     font-weight: bolder;
 }
 
+h2 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+}
+
 p {
     font-size: medium;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
 }

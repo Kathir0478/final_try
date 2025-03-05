@@ -35,7 +35,7 @@ def fetch():
     - **Fitness Level** : {req.get("fitnesslevel")}
 
     ### **Task**  
-    Generate a **structured workout schedule** that fits within the given frequency in days, while aligning with the goal and preference and considering the Fitness Level, height ,weight, age, gender and medical being, the result must only has frequency days give it has numbered days not specifying the weekdays.  
+    Generate a **structured workout schedule** that fits within the given frequency in days and the workout must be suitable for homeworkout considering the fact of equipment limitations, while aligning with the goal and preference and considering the Fitness Level, height ,weight, age, gender and medical being, the result must only has frequency days give it has numbered days not specifying the weekdays and don't give rest days.  
 
     ### **Response Format (Strictly Follow This Format)**  
     Provide the response ONLY in the following **JSON structure**, without any additional text or explanation:  
@@ -44,8 +44,9 @@ def fetch():
     {{
     "Day": [
         {{"exercise": "Exercise Name in short",
-         "guide": "Description of how to do the exercises"
-           "time": "Duration in minutes that sums upto duration only the number"}},...
+        "guide": "Description of how to do the exercises",
+        "time": "Total number of single reps as a whole number only the number needed",
+        "reward":"Suitable rating of this exercise out of 100"   }},...
     ],...
     }}
     """

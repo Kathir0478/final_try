@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { login, signup, getdata, update } = require('./controller')
+const { login, signup, getdata, update, progressupdate } = require('./controller')
 
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -23,5 +23,5 @@ router.post("/login", login)
 router.post("/signup", signup)
 router.get("/getdata", authorizemid, getdata)
 router.post("/setdata", authorizemid, update)
-
+router.post("/update", authorizemid, progressupdate)
 module.exports = router;
