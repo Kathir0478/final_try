@@ -5,7 +5,7 @@ import { IoFitnessOutline } from "react-icons/io5"
 
 const Signup = () => {
     const navigate = useNavigate();
-    const base_api = "https://final-try-backend.onrender.com"
+    const base_api = "http://localhost:5000"
     const api = `${base_api}/api/signup`
     const [confirm, setConfirm] = useState("")
     const [userdata, setUserdata] = useState({ name: "", email: "", password: "" })
@@ -48,7 +48,7 @@ const Signup = () => {
                 <form onSubmit={handleSubmit} className='flex flex-col items-center gap-10'>
                     <div className='flex gap-5 items-center'>
                         <p className='text-green-500 w-24 text-right'>Name: </p>
-                        <input type='text' placeholder='User' name='name' value={userdata.name} onChange={handleChange} className='text-xl border-green-500 border-2 rounded-lg p-2 shadow-lg shadow-green-500 justify-center' required />
+                        <input type='text' placeholder='User' name='name' value={userdata.name} onChange={handleChange} className='text-xl border-green-500 border-2 rounded-lg p-2 shadow-lg shadow-green-500 justify-center ' required />
                     </div>
                     <div className='flex gap-5 items-center'>
                         <p className='text-green-500 w-24 text-right'>Email: </p>

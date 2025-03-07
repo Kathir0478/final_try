@@ -9,7 +9,7 @@ const Startworkout = () => {
     const plan = location.state || []
     const [count, setCount] = useState(-1)
     const token = localStorage.getItem("token")
-    const base_api="https://final-try-backend.onrender.com"
+    const base_api = "http://localhost:5000"
     const getapi = `${base_api}/api/getdata`
     const updateapi = `${base_api}/api/update`
     async function fetchdata() {
@@ -49,12 +49,13 @@ const Startworkout = () => {
                 console.error("Error fetching data:", error);
             }
         }
-        console.log(count)
-        console.log(reward)
     }
     useEffect(() => {
+        if (!token) {
+            navigate("/error")
+        }
         fetchdata()
-        update({ reward: 100 })
+        update({ reward: 50 })
     }, [])
     return (
         <div className='flex flex-col w-full h-full items-center justify-center p-20'>
@@ -83,7 +84,7 @@ const Startworkout = () => {
             {count === plan.length && (
                 <div>
                     <h1>Have You completed</h1>
-                    <button onClick={() => { update({ count: 1, reward: 100 }) }}><p>Yes</p></button>
+                    <button onClick={() => { update({ count: 1, reward: 50 }) }}><p>Yes</p></button>
                 </div>
             )}
         </div >

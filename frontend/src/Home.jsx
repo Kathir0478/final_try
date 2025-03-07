@@ -6,7 +6,7 @@ import { IoFitnessOutline } from "react-icons/io5";
 const Home = () => {
     const [user, setUser] = useState("")
     const navigate = useNavigate()
-    const base_api="https://final-try-backend.onrender.com"
+    const base_api = "http://localhost:5000"
     const api = `${base_api}/api/getdata`
     const token = localStorage.getItem("token")
     async function fetchData() {
@@ -89,8 +89,8 @@ const Home = () => {
                     Get Your Personalized <span className='text-green-500'>Workout Plan!</span>
                 </h2>
                 <div className='flex p-10'>
-                    <p className='flex-1'><span className='text-green-500'>Your fitness journey starts here! </span> To create a customized workout plan that perfectly suits your goals, we need a few details from you.</p>
-                    <button onClick={() => { navigate("/updatedata") }} className='flex-1 flex justify-center '>
+                    <p className='flex-8'><span className='text-green-500'>Your fitness journey starts here! </span> To create a customized workout plan that perfectly suits your goals, we need a few details from you.</p>
+                    <button onClick={() => { navigate("/updatedata") }} className='flex-4 flex justify-center '>
                         <p className="border-2 p-4 rounded-lg border-green-500 shadow-lg shadow-green-500 cursor-pointer">{user ? "Set Your Data" : "Update Your Data"}</p>
                     </button>
                 </div>

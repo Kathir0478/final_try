@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Updatedata = () => {
     const navigate = useNavigate()
-    const base_api="https://final-try-backend.onrender.com"
+    const base_api = "http://localhost:5000"
     const getapi = `${base_api}/api/getdata`
     const setapi = `${base_api}/api/setdata`
     const [userdata, setUserdata] = useState(null)
@@ -28,6 +28,9 @@ const Updatedata = () => {
         }
     }
     useEffect(() => {
+        if (!token) {
+            navigate("/error")
+        }
         fetchdata()
     }, [])
     function validate() {

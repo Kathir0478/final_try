@@ -5,7 +5,7 @@ import { IoFitnessOutline } from "react-icons/io5"
 
 const Login = () => {
     const navigate = useNavigate();
-    const base_api="https://final-try-backend.onrender.com"
+    const base_api = "http://localhost:5000"
     const api = `${base_api}/api/login`
     const [userdata, setUserdata] = useState({ email: "", password: "" })
     const handleChange = (event) => {

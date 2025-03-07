@@ -31,7 +31,7 @@ const Workouts = () => {
     const [workouts, setWorkouts] = useState({})
     const [selected, setSelected] = useState(-1)
     const token = localStorage.getItem("token")
-    const base_api="https://final-try-backend.onrender.com"
+    const base_api = "http://localhost:5000"
     const api = `${base_api}/api/getdata`
     const fetchdata = async () => {
         try {
@@ -50,6 +50,9 @@ const Workouts = () => {
         }
     }
     useEffect(() => {
+        if (!token) {
+            navigate("/error")
+        }
         fetchdata()
     }, [])
     const handleSelect = (index) => {
