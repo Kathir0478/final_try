@@ -1,27 +1,30 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { IoFitnessOutline } from "react-icons/io5";
+
 
 const Card = ({ day, plan, index, selected, setSelected }) => {
     const navigate = useNavigate()
     return (
-        <div className='flex flex-col gap-5 p-10 items-start'>
-            <div className='flex gap-5'>
-                <h1>{day}</h1>
-                <button onClick={() => setSelected(index)}>
+        <div className='flex flex-col gap-5 p-10 bg-gray-600 rounded-3xl'>
+            <div className='flex justify-between w-full'>
+                <h2 className='text-green-500'>{day}</h2>
+                <button onClick={() => setSelected(index)} className='bg-green-500 rounded-lg w-30'>
                     {selected === index ? <span onClick={() => { navigate('/session', { state: plan }) }}>Select</span> : "View"}
                 </button>
             </div>
-            {selected === index && plan.map((value, idx) => (
-                <div key={idx} className='flex flex-col gap-2 px-10 w-full'>
-                    <div className='flex justify-between'>
-                        <h2>{value.exercise}</h2>
-                        <h2>{value.time}</h2>
+            <div className={`flex flex-col gap-5 `}>
+                {selected === index && plan.map((value, idx) => (
+                    <div key={idx} className='flex flex-col gap-2 px-10 w-full'>
+                        <div className='flex justify-between text-green-500'>
+                            <h2>{value.exercise}</h2>
+                            <h2>{value.time}</h2>
+                        </div>
+                        <p>{value.guide}</p>
                     </div>
-                    <p>{value.guide}</p>
-                </div>
-            ))}
-
+                ))}
+            </div>
         </div >
     )
 }
@@ -58,18 +61,40 @@ const Workouts = () => {
     const handleSelect = (index) => {
         setSelected(prev => prev === index ? -1 : index)
     }
-    console.log(selected)
     return (
-        <div className='flex flex-col p-10'>
-            <div className='flex justify-between'>
-                <h1>Your workout plan</h1>
-                <button onClick={() => { navigate('/') }}><p>Back to home</p></button>
+        <div className='bg-gray-950 h-full min-h-screen text-white relative bg-fixed flex flex-col'>
+            <div className='fixed w-full h-20 bg-gray-950 flex justify-between px-10 py-15'>
+                <div className='flex gap-10 items-center'>
+                    <IoFitnessOutline className='size-10 text-green-500' />
+                    <h2>Home<span className='text-green-500'>Pulse</span></h2>
+                </div>
+                <div className='flex items-center'>
+                    <button onClick={() => { navigate('/') }}><h4>Back to <span className='text-green-500'>Home</span></h4></button>
+                </div>
             </div>
-            {Object.entries(workouts).map(([day, exercises], index) => (
-                <Card key={index} day={day} plan={exercises} index={index} selected={selected} setSelected={handleSelect} />
-            ))}
+            <div className='flex my-25'>
+                <div className='flex flex-col p-20 flex-1 gap-10' >
+                    <h2><span className='text-green-500'>Your</span> Workout Plan</h2>
+                    <div className='flex flex-col gap-5'>
+                        {Object.entries(workouts).map(([day, exercises], index) => (
+                            <Card key={index} day={day} plan={exercises} index={index} selected={selected} setSelected={handleSelect} />
+                        ))}
+                    </div>
+                </div>
+                <div className='flex-1 flex flex-col p-20 w-full h-screen justify-center items-center'>
+                    <div className='flex flex-col leading-relaxed fixed w-2/5'>
+                        <div className='flex flex-col gap-1 p-5'>
+                            <h2 className='text-green-500'>Unlock Your Best Self</h2>
+                            <h2>One Workout at a Time!</h2>
+                        </div>
+                        <p className='p-5'>Every journey begins with a decision—to show up, to put in the effort, and to become better than yesterday. This workout plan is not just a routine; it's a step toward a stronger, healthier, and more confident YOU. </p>
+                        <h2 className='italic text-green-500 p-5 py-20 text-center'>Let’s get started!</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
 
 export default Workouts
+

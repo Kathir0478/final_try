@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { IoFitnessOutline } from "react-icons/io5";
 
 const Setdata = () => {
     const navigate = useNavigate()
     const base_api = "http://localhost:5000"
     const api = `${base_api}/api/setdata`
-    const [moddata, setmoddata] = useState({ age: "", gender: '', height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
+    const [moddata, setmoddata] = useState({ age: "", height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
     const token = localStorage.getItem("token")
     useEffect(() => {
         if (!token) {
@@ -51,73 +52,83 @@ const Setdata = () => {
         }
     };
     return (
-        <div>
-            <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center h-screen w-screen gap-10'>
-                <div className='flex flex-col gap-4 p-10 '>
-                    <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
-                        <p className='w-42 p-2'>Age </p>
-                        <input type='number' placeholder="Enter age between 18-100" name='age' value={moddata.age} onChange={handleChange} className='p-2 outline-none w-full' required />
-                    </div>
-                    <div className="flex items-center border-sky-400 border-2 rounded-lg p-2" >
-                        <p className="w-42 p-2">Gender</p>
-                        <div className="flex gap-4 flex-1" required>
-                            <label className="flex items-center gap-2">
-                                <input type="radio" name="gender" value="Male" checked={moddata.gender === "Male"} onChange={handleChange} required />
-                                Male
-                            </label>
-                            <label className="flex items-center gap-2">
-                                <input type="radio" name="gender" value="Female" checked={moddata.gender === "Female"} onChange={handleChange} />
-                                Female
+        <div className='fixed top-0 left-0 w-screen h-screen flex flex-col bg-gray-950 text-white'>
+            <div className='flex justify-between p-10'>
+                <div className='flex gap-10 items-center'>
+                    <IoFitnessOutline className='size-10 text-green-500' />
+                    <h2>Home<span className='text-green-500'>Pulse</span></h2>
+                </div>
+            </div>
+            <form onSubmit={handleSubmit} className='flex items-center gap-5 px-40'>
+                <div className='flex-1 border-green-500 border-1 rounded-lg p-20'>
+                    <div className='flex flex-col gap-5'>
+                        <div className='flex gap-5 items-center'>
+                            <p className='w-56'>Age </p>
+                            <input type='number' placeholder="Enter age between 18-100" name='age' value={moddata.age} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                        </div>
+                        <div className='flex gap-5 items-center'>
+                            <p className='w-56'>Height </p>
+                            <input type='number' placeholder="Enter valid height in cm" name='height' value={moddata.height} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                        </div>
+                        <div className='flex gap-5 items-center'>
+                            <p className='w-56'>weight </p>
+                            <input type='number' placeholder="Enter valid weight in kg" name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                        </div>
+                        <div className='flex items-center gap-5'>
+                            <p className='w-56'>Fitness Level </p>
+                            <label className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5  w-full'>
+                                <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-600' required>
+                                    <option value="">Select your current fitness level</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
                             </label>
                         </div>
-                    </div>
-                    <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
-                        <p className='w-42 p-2'>Height </p>
-                        <input type='number' placeholder="Enter valid height in cm" name='height' value={moddata.height} onChange={handleChange} className='w-full p-2 outline-none' required />
-                    </div>
-                    <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
-                        <p className='w-42 p-2'>weight </p>
-                        <input type='number' placeholder="Enter valid weight in kg" name='weight' value={moddata.weight} onChange={handleChange} className='w-full p-2 outline-none' required />
-                    </div>
-                    <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
-                        <p className='w-42 p-2'>Fitness Level </p>
-                        <label className='flex-1'>
-                            <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full p-2 rounded-lg outline-none ' required>
-                                <option value="">Select your current fitness level</option>
-                                <option value="Beginner">Beginner</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Advanced">Advanced</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
-                        <p className='w-42 p-2'>Goal </p>
-                        <label className='flex-1'>
-                            <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full p-2 rounded-lg outline-none' required>
-                                <option value="">What is your goal</option>
-                                <option value="General Fitness">General Fitness</option>
-                                <option value="Muscle Building">Muscle Building</option>
-                                <option value="Weight Loss">Weight Loss</option>
-                                <option value="Flexibility Mobility">Flexibility & Mobility</option>
-                                <option value="Cardio Endurance">Cardiovascular Endurance</option>
-                                <option value="Mental Wellbeing">Mental Well-being</option>
-                                <option value="Sport Training">Sport-Specific Training</option>
-                                <option value="Habit Consistency">Build Workout Habit</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
-                        <p className='w-42 p-2'>Frequency </p>
-                        <input type='number' placeholder="Days to spend in week" name='frequency' value={moddata.frequency} onChange={handleChange} className='p-2 outline-none w-full' required />
-                    </div>
-                    <div className='flex items-center border-sky-400 border-2 rounded-lg p-2'>
-                        <p className='w-42 p-2'>Description </p>
-                        <textarea className='outline-none w-full' placeholder="Any medical conditions" name='description' value={moddata.description} onChange={handleChange} />
+                        <div className='flex items-center gap-5'>
+                            <p className='w-56'>Goal </p>
+                            <label className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full bg-gray-600'>
+                                <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-600 outline-none' required>
+                                    <option value="">What is your goal</option>
+                                    <option value="General Fitness">General Fitness</option>
+                                    <option value="Muscle Building">Muscle Building</option>
+                                    <option value="Weight Loss">Weight Loss</option>
+                                    <option value="Flexibility Mobility">Flexibility & Mobility</option>
+                                    <option value="Cardio Endurance">Cardiovascular Endurance</option>
+                                    <option value="Mental Wellbeing">Mental Well-being</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div className='flex items-center gap-5'>
+                            <p className='w-56'>Frequency </p>
+                            <input type='number' placeholder="Days to spend in week" name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                        </div>
+                        <div className='flex items-center gap-5'>
+                            <p className='w-56'>Description </p>
+                            <textarea className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 w-full pl-5 ' placeholder="Any medical conditions" name='description' value={moddata.description} onChange={handleChange} />
+                        </div>
                     </div>
                 </div>
-                <button type='submit' className='border-2 p-2 rounded-lg border-sky-400'>Proceed</button>
-            </form>
-        </div>
+                <div className='flex-1 flex flex-col p-10 gap-10'>
+                    <h2 className='flex flex-col'><span className='text-green-500'>Enter Your Details & </span><span>Get Your Perfect Workout Plan!</span> </h2>
+                    <p>
+                        Unlock a personalized fitness plan tailored to your goals, lifestyle, and fitness level. By entering your details, you’ll get an accurate workout plan that helps you:
+                    </p>
+                    <ul className='flex flex-col gap-3 indent-20'>
+                        <li><p>Build strength & endurance effortlessly</p></li>
+                        <li><p>Stay consistent with smart progress tracking</p></li>
+                        <li><p>Achieve your goals faster with expert-backed routines</p></li>
+                    </ul>
+                    <h4>
+                        <span className='text-green-500'>Take the first step today!</span> Enter your details now and transform your fitness journey.
+                    </h4>
+                    <button type='submit' className='flex w-full justify-center '>
+                        <p className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500'>Get Started</p>
+                    </button>
+                </div>
+
+            </form >
+        </div >
     )
 }
 

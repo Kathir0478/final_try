@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { IoFitnessOutline } from "react-icons/io5";
 
 const Home = () => {
+    const [showout, setShowout] = useState(false)
     const [user, setUser] = useState("")
     const navigate = useNavigate()
     const base_api = "http://localhost:5000"
@@ -19,6 +20,7 @@ const Home = () => {
         fetchData()
     }, [])
     const logout = () => {
+        setShowout(false)
         localStorage.removeItem('token')
         setUser(null)
         navigate('/')
@@ -32,7 +34,7 @@ const Home = () => {
                 {user && <button onClick={() => { navigate('/updatedata') }}><h4 className='text-green-500 cursor-pointer'>Update Details</h4></button>}
                 {user && <button onClick={() => { navigate("/profile") }}><h4 className='cursor-pointer'>{user}</h4></button>}
                 {user ? (
-                    <button onClick={logout}><h4 className='text-green-500  cursor-pointer'>Logout</h4></button>
+                    <button onClick={() => setShowout(true)}><h4 className='text-green-500 cursor-pointer'>Logout</h4></button>
                 ) : (
                     <div className='flex gap-20'>
                         <button onClick={() => { navigate('/login') }}><h4 className='text-green-500  cursor-pointer'>Login</h4></button>
@@ -40,7 +42,17 @@ const Home = () => {
                     </div>
                 )}
             </nav>
-
+            {showout && (
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-950 ">
+                    <div className="p-10  gap-10 flex flex-col items-center">
+                        <h2 className=''>Are you sure you want to logout?</h2>
+                        <div className="flex gap-10 m-4">
+                            <button onClick={logout} className="bg-red-500 px-4 py-2 rounded-md text-white"><p>Logout</p></button>
+                            <button onClick={() => setShowout(false)} className="bg-green-500 px-4 py-2 rounded-md text-white"><p>Cancel</p></button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="mt-[70px] flex flex-col">
                 <h1 className='flex'>Home<span className='flex items-center text-green-500 gap-5'>Pulse<IoFitnessOutline /></span></h1>
                 <p className="flex flex-col p-6 leading-relaxed gap-6 ">
@@ -65,7 +77,7 @@ const Home = () => {
                     </ul>
                     <div className="flex-1 flex justify-center">
                         <button onClick={() => { navigate("workoutplan") }}>
-                            <p className="border-2 p-4 rounded-lg border-green-500 shadow-lg shadow-green-500 cursor-pointer">Start Your Workout <span className='text-green-500'>Now</span></p>
+                            <p className="border-1 p-4 rounded-xl border-green-500 shadow-lg shadow-green-500 cursor-pointer">Start Your Workout <span className='text-green-500'>Now</span></p>
                         </button>
                     </div>
                 </div>
@@ -91,7 +103,7 @@ const Home = () => {
                 <div className='flex p-10'>
                     <p className='flex-8'><span className='text-green-500'>Your fitness journey starts here! </span> To create a customized workout plan that perfectly suits your goals, we need a few details from you.</p>
                     <button onClick={() => { navigate("/updatedata") }} className='flex-4 flex justify-center '>
-                        <p className="border-2 p-4 rounded-lg border-green-500 shadow-lg shadow-green-500 cursor-pointer">{user ? "Set Your Data" : "Update Your Data"}</p>
+                        <p className="border-1 p-4 rounded-xl border-green-500 shadow-lg shadow-green-500 cursor-pointer">{user ? "Set Your Data" : "Update Your Data"}</p>
                     </button>
                 </div>
             </div>
