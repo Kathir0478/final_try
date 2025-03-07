@@ -28,15 +28,15 @@ const Home = () => {
         <div className="relative flex flex-col  px-50 gap-20 p-20 text-white bg-gray-950">
             <nav className="fixed top-0 left-0 w-full  flex justify-end gap-20 p-10 z-50 bg-gray-950">
                 <IoFitnessOutline className='size-10 text-green-500' />
-                {user && <button onClick={() => { navigate('/workoutplan') }}><h4 className='text-green-500'>Start Workout</h4></button>}
-                {user && <button onClick={() => { navigate('/updatedata') }}><h4 className='text-green-500'>Update Details</h4></button>}
-                {user && <button onClick={() => { navigate("/profile") }}><h4>{user}</h4></button>}
+                {user && <button onClick={() => { navigate('/workoutplan') }}><h4 className='text-green-500 cursor-pointer'>Start Workout</h4></button>}
+                {user && <button onClick={() => { navigate('/updatedata') }}><h4 className='text-green-500 cursor-pointer'>Update Details</h4></button>}
+                {user && <button onClick={() => { navigate("/profile") }}><h4 className='cursor-pointer'>{user}</h4></button>}
                 {user ? (
-                    <button onClick={logout}><h4 className='text-green-500'>Logout</h4></button>
+                    <button onClick={logout}><h4 className='text-green-500  cursor-pointer'>Logout</h4></button>
                 ) : (
                     <div className='flex gap-20'>
-                        <button onClick={() => { navigate('/login') }}><h4 className='text-green-500'>Login</h4></button>
-                        <button onClick={() => { navigate('/signup') }}><h4 className='text-green-500'>Signup</h4></button>
+                        <button onClick={() => { navigate('/login') }}><h4 className='text-green-500  cursor-pointer'>Login</h4></button>
+                        <button onClick={() => { navigate('/signup') }}><h4 className='text-green-500  cursor-pointer'>Signup</h4></button>
                     </div>
                 )}
             </nav>
@@ -65,7 +65,7 @@ const Home = () => {
                     </ul>
                     <div className="flex-1 flex justify-center">
                         <button onClick={() => { navigate("workoutplan") }}>
-                            <p className="border-2 p-4 rounded-lg border-green-500">Start Your Workout <span className='text-green-500'>Now</span></p>
+                            <p className="border-2 p-4 rounded-lg border-green-500 shadow-lg shadow-green-500 cursor-pointer">Start Your Workout <span className='text-green-500'>Now</span></p>
                         </button>
                     </div>
                 </div>
@@ -90,8 +90,8 @@ const Home = () => {
                 </h2>
                 <div className='flex p-10'>
                     <p className='flex-1'><span className='text-green-500'>Your fitness journey starts here! </span> To create a customized workout plan that perfectly suits your goals, we need a few details from you.</p>
-                    <button onClick={() => { navigate("/updatedata") }} className='flex-1 flex justify-center'>
-                        <p className="border-2 p-7 rounded-lg border-green-500">{user ? "Set Your Data" : "Update Your Data"}</p>
+                    <button onClick={() => { navigate("/updatedata") }} className='flex-1 flex justify-center '>
+                        <p className="border-2 p-4 rounded-lg border-green-500 shadow-lg shadow-green-500 cursor-pointer">{user ? "Set Your Data" : "Update Your Data"}</p>
                     </button>
                 </div>
             </div>
