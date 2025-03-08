@@ -2,14 +2,17 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IoFitnessOutline } from "react-icons/io5"
+import { demo } from './assets/demo'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastOpt } from "./assets/ToastOpt"
 
 const Profile = () => {
     const navigate = useNavigate()
     const [userData, setUserData] = useState({})
     const [proglevel, setProglevel] = useState({ level: 0, extra: 0, levelup: 0 })
     const token = localStorage.getItem('token')
-    const base_api = "http://localhost:5000"
-    const getapi = `${base_api}/api/getdata`
+    const getapi = demo.getdata
     async function fetchdata() {
         try {
             const user = await axios.get(getapi, {
@@ -24,7 +27,7 @@ const Profile = () => {
                 navigate('/error')
             }
             else {
-                console.error("Error fetching data:", error);
+                toast.error(error.response?.data?.message || "Error, try again later", ToastOpt);
             }
         }
     }
@@ -49,7 +52,7 @@ const Profile = () => {
                 <div className='flex flex-col gap-6 border border-green-500 bg-gray-900 p-10 w-full max-w-3xl rounded-3xl shadow-lg shadow-green-500 leading-relaxed'>
                     <h2 className='text-green-500 text-center '>Your Fitness Journey Unfolds</h2>
 
-                    <div className='flex flex-col items-center gap-2'>
+                    <div className='flex flex-col items-center gap-1'>
                         <h4><span className='text-green-500'>{userData.name}</span></h4>
                         <p className='opacity-50'>{userData.email}</p>
                     </div>
@@ -58,9 +61,9 @@ const Profile = () => {
                         <h4>Total Streak: <span className='text-green-500'>{userData.visits}</span> days</h4>
                         <h4>Current Level: <span className='text-green-500'>{proglevel.level}</span></h4>
 
-                        <div className='relative w-full bg-gray-800 h-12 rounded-xl overflow-hidden'>
+                        <div className='relative w-full bg-gray-800 h-8 rounded-full overflow-hidden'>
                             <div
-                                className='h-full bg-gradient-to-r from-green-200 to-green-600 rounded-xl transition-all duration-700 ease-in-out'
+                                className='h-full bg-gradient-to-r from-green-200 to-green-600 rounded-full transition-all duration-700 ease-in-out'
                                 style={{ width: `${(proglevel.extra / 1000) * 100}%` }}
                             />
                         </div>
@@ -70,6 +73,7 @@ const Profile = () => {
                     <h4 className='w-full text-center p-5 italic text-green-500'>Your progress matters – Keep pushing forward!</h4>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }

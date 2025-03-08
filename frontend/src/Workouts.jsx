@@ -2,7 +2,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IoFitnessOutline } from "react-icons/io5";
-
+import { demo } from './assets/demo'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastOpt } from "./assets/ToastOpt"
 
 const Card = ({ day, plan, index, selected, setSelected }) => {
     const navigate = useNavigate()
@@ -34,8 +37,7 @@ const Workouts = () => {
     const [workouts, setWorkouts] = useState({})
     const [selected, setSelected] = useState(-1)
     const token = localStorage.getItem("token")
-    const base_api = "http://localhost:5000"
-    const api = `${base_api}/api/getdata`
+    const api = demo.getdata
     const fetchdata = async () => {
         try {
             const user = await axios.get(api, {
@@ -48,7 +50,7 @@ const Workouts = () => {
                 navigate('/error')
             }
             else {
-                console.error("Error fetching data:", error);
+                toast.error(error.response?.data?.message || "Please Try again later", ToastOpt);
             }
         }
     }
@@ -104,7 +106,7 @@ const Workouts = () => {
                     </div>
                 </div>)
             }
-
+            <ToastContainer />
         </div>
     )
 }

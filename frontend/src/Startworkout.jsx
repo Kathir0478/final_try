@@ -2,7 +2,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { IoFitnessOutline } from "react-icons/io5";
-
+import { demo } from './assets/demo'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastOpt } from "./assets/ToastOpt"
 
 const Startworkout = () => {
     const location = useLocation()
@@ -11,9 +14,8 @@ const Startworkout = () => {
     const plan = location.state || []
     const [count, setCount] = useState(-1)
     const token = localStorage.getItem("token")
-    const base_api = "http://localhost:5000"
-    const getapi = `${base_api}/api/getdata`
-    const updateapi = `${base_api}/api/update`
+    const getapi = demo.getdata
+    const updateapi = demo.update
     async function fetchdata() {
         try {
             const user = await axios.get(getapi, {
@@ -25,7 +27,7 @@ const Startworkout = () => {
                 navigate('/error')
             }
             else {
-                console.error("Error fetching data:", error);
+                toast.error(error.response?.data?.message || "Error, try again later", ToastOpt);
             }
         }
     }
@@ -48,7 +50,7 @@ const Startworkout = () => {
                 navigate('/error')
             }
             else {
-                console.error("Error fetching data:", error);
+                toast.error(error.response?.data?.message || "Error, try again later", ToastOpt);
             }
         }
     }
@@ -92,7 +94,7 @@ const Startworkout = () => {
                         {(count === -1) && (
                             <div className='flex flex-col gap-20 items-center'>
                                 <h2>Lets get <span className='text-green-500'>Started!!!</span></h2>
-                                <h4 className='text-center italic'>Whether you're here for strength, endurance, or just to feel good, your journey starts NOW. Get up, get moving, and let’s make every workout count!</h4>
+                                <p className='text-center italic'>Whether you're here for strength, endurance, or just to feel good, your journey starts NOW. Get up, get moving, and let’s make every workout count!</p>
                                 <button className='bg-green-500 p-3 rounded-xl w-30' onClick={() => { setCount(0) }}><p>Start</p></button>
                             </div>
                         )}
@@ -113,7 +115,7 @@ const Startworkout = () => {
                 </div>) :
                 (navigate("/workoutplan"))
             }
-
+            <ToastContainer />
         </div >
     )
 }

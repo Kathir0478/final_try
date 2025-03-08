@@ -2,12 +2,15 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IoFitnessOutline } from "react-icons/io5";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastOpt } from "./assets/ToastOpt"
+import { demo } from './assets/demo'
 
 const Setdata = () => {
     const navigate = useNavigate()
-    const base_api = "http://localhost:5000"
-    const api = `${base_api}/api/setdata`
-    const verifyapi = `${base_api}/api/verify`
+    const api = demo.setdata
+    const verifyapi = demo.verify
     const [moddata, setmoddata] = useState({ age: "", gender: "", height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
     const token = localStorage.getItem("token")
     useEffect(() => {
@@ -26,25 +29,37 @@ const Setdata = () => {
                 navigate('/updatedata')
             }
             else {
-                console.error("Error fetching data:", error);
+                toast.error(error.response?.data?.message || "Error setting data, try again later", ToastOpt);
             }
         }
     }
     function validate() {
-        if (Number(moddata.age) < 18 || Number(moddata.age) > 100) {
-            alert("Enter valid age");
+        if (Number(moddata.age) < 18 || Number(moddata.age) > 100 || !moddata.age) {
+            toast.warning("Enter valid age", ToastOpt)
             return false;
         }
-        if (Number(moddata.height) < 50 || Number(moddata.height) > 300) {
-            alert("Enter valid height");
+        if (Number(moddata.height) < 50 || Number(moddata.height) > 300 || !moddata.height) {
+            toast.warning("Enter valid height between 50 and 300 in cm", ToastOpt)
             return false;
         }
-        if (Number(moddata.weight) < 20 || Number(moddata.weight) > 300) {
-            alert("Enter valid weight");
+        if (Number(moddata.weight) < 20 || Number(moddata.weight) > 300 || !moddata.weight) {
+            toast.warning("Enter valid weight between 20 and 300 in Kg", ToastOpt);
             return false;
         }
-        if (Number(moddata.frequency) < 1 || Number(moddata.frequency) > 7) {
-            alert("Enter valid frequency");
+        if (!moddata.gender) {
+            toast.warning("Choose your Gender", ToastOpt)
+            return false;
+        }
+        if (!moddata.fitlevel) {
+            toast.warning("Choose your Current Fitness level", ToastOpt)
+            return false;
+        }
+        if (!moddata.goal) {
+            toast.warning("Your goal is required", ToastOpt)
+            return false;
+        }
+        if (Number(moddata.frequency) < 1 || Number(moddata.frequency) > 7 || !moddata.frequency) {
+            toast.warning("Enter valid frequency in days per week", ToastOpt);
             return false;
         }
         return true;
@@ -55,16 +70,19 @@ const Setdata = () => {
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (validate()) {
-            try {
+        try {
+            if (validate()) {
+                toast.success("Data submitted succesfully,", ToastOpt)
+                setTimeout(() => {
+                    toast.info("Redirecting shortly...", ToastOpt)
+                }, 7000);
                 const response = await axios.post(api, moddata, {
                     headers: { Authorization: token }
                 });
-                alert("Data submitted successfully!");
                 navigate("/");
-            } catch (error) {
-                alert("Error submitting data: " + error.response?.data?.message || error.message);
             }
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Please Try again later", ToastOpt);
         }
     };
     return (
@@ -80,15 +98,15 @@ const Setdata = () => {
                     <div className='flex flex-col gap-5 '>
                         <div className='flex gap-5 items-center'>
                             <p className='w-56 italic'>Age </p>
-                            <input type='number' placeholder="Enter age between 18-100" name='age' value={moddata.age} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                            <input type='number' placeholder="Enter age between 18-100" name='age' value={moddata.age} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
                         </div>
                         <div className='flex gap-5 items-center'>
                             <p className='w-56 italic'>Height </p>
-                            <input type='number' placeholder="Enter valid height in cm" name='height' value={moddata.height} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                            <input type='number' placeholder="Enter valid height in cm" name='height' value={moddata.height} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
                         </div>
                         <div className='flex gap-5 items-center'>
                             <p className='w-56 italic'>weight </p>
-                            <input type='number' placeholder="Enter valid weight in kg" name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                            <input type='number' placeholder="Enter valid weight in kg" name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
                         </div>
                         <div className="flex gap-5 items-center">
                             <p className="w-56 italic">Gender</p>
@@ -106,7 +124,7 @@ const Setdata = () => {
                         <div className='flex items-center gap-5'>
                             <p className='w-56 italic'>Fitness Level </p>
                             <label className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full'>
-                                <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-950' required>
+                                <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-950'>
                                     <option value="">Select your current fitness level</option>
                                     <option value="Beginner">Beginner</option>
                                     <option value="Intermediate">Intermediate</option>
@@ -117,7 +135,7 @@ const Setdata = () => {
                         <div className='flex items-center gap-5'>
                             <p className='w-56 italic'>Goal </p>
                             <label className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full bg-gray-950'>
-                                <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-950 outline-none' required>
+                                <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-950 outline-none'>
                                     <option value="">What is your goal</option>
                                     <option value="General Fitness">General Fitness</option>
                                     <option value="Muscle Building">Muscle Building</option>
@@ -130,7 +148,7 @@ const Setdata = () => {
                         </div>
                         <div className='flex items-center gap-5'>
                             <p className='w-56 italic'>Frequency </p>
-                            <input type='number' placeholder="Days to spend in week" name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                            <input type='number' placeholder="Days to spend in week" name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
                         </div>
                         <div className='flex items-center gap-5'>
                             <p className='w-56 italic'>Description </p>
@@ -155,7 +173,7 @@ const Setdata = () => {
                         <p className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500'>Get Started</p>
                     </button>
                 </div>
-
+                <ToastContainer />
             </form >
         </div >
     )

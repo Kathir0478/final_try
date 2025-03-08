@@ -2,13 +2,13 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IoFitnessOutline } from "react-icons/io5";
+import { demo } from './assets/demo'
 
 const Home = () => {
     const [showout, setShowout] = useState(false)
     const [user, setUser] = useState("")
     const navigate = useNavigate()
-    const base_api = "http://localhost:5000"
-    const api = `${base_api}/api/getdata`
+    const api = demo.getdata
     const token = localStorage.getItem("token")
     async function fetchData() {
         const result = await axios.get(api, {
@@ -25,7 +25,6 @@ const Home = () => {
         setUser(null)
         navigate('/')
     }
-    console.log(user)
     return (
         <div className="relative flex flex-col  px-50 gap-20 p-20 text-white bg-gray-950">
             <nav className="fixed top-0 left-0 w-full  flex justify-end gap-20 p-10 z-50 bg-gray-950">

@@ -2,12 +2,15 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IoFitnessOutline } from "react-icons/io5";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastOpt } from "./assets/ToastOpt"
+import { demo } from './assets/demo'
 
 const Updatedata = () => {
     const navigate = useNavigate()
-    const base_api = "http://localhost:5000"
-    const getapi = `${base_api}/api/getdata`
-    const setapi = `${base_api}/api/setdata`
+    const getapi = demo.getdata
+    const setapi = demo.setdata
     const [userdata, setUserdata] = useState(null)
     const [moddata, setmoddata] = useState({ name: "", age: 0, height: 0, weight: 0, fitlevel: "", goal: "", frequency: 0, description: "" })
     const token = localStorage.getItem("token")
@@ -27,7 +30,7 @@ const Updatedata = () => {
                 navigate('/error')
             }
             else {
-                console.error("Error fetching data:", error);
+                toast.error(error.response?.data?.message || "Please Try again later", ToastOpt);
             }
         }
     }
@@ -38,20 +41,28 @@ const Updatedata = () => {
         fetchdata()
     }, [])
     function validate() {
-        if (Number(moddata.age) < 18 || Number(moddata.age) > 100) {
-            alert("Enter valid age");
+        if (Number(moddata.age) < 18 || Number(moddata.age) > 100 || !moddata.age) {
+            toast.warning("Enter valid age", ToastOpt)
             return false;
         }
-        if (Number(moddata.height) < 50 || Number(moddata.height) > 300) {
-            alert("Enter valid height");
+        if (Number(moddata.height) < 50 || Number(moddata.height) > 300 || !moddata.height) {
+            toast.warning("Enter valid height between 50 and 300 in cm", ToastOpt)
             return false;
         }
-        if (Number(moddata.weight) < 20 || Number(moddata.weight) > 300) {
-            alert("Enter valid weight");
+        if (Number(moddata.weight) < 20 || Number(moddata.weight) > 300 || !moddata.weight) {
+            toast.warning("Enter valid weight between 20 and 300 in Kg", ToastOpt);
             return false;
         }
-        if (Number(moddata.frequency) < 1 || Number(moddata.frequency) > 7) {
-            alert("Enter valid frequency");
+        if (!moddata.fitlevel) {
+            toast.warning("Choose your Current Fitness level", ToastOpt)
+            return false;
+        }
+        if (!moddata.goal) {
+            toast.warning("Your goal is required", ToastOpt)
+            return false;
+        }
+        if (Number(moddata.frequency) < 1 || Number(moddata.frequency) > 7 || !moddata.frequency) {
+            toast.warning("Enter valid frequency in days per week", ToastOpt);
             return false;
         }
         return true;
@@ -61,12 +72,20 @@ const Updatedata = () => {
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
-        if (validate()) {
-            alert("Data updated succesfully")
-            const user = await axios.post(setapi, moddata, {
-                headers: { Authorization: token }
-            })
-            navigate('/')
+        try {
+            if (validate()) {
+                toast.success("Data updated succesfully", ToastOpt)
+                setTimeout(() => {
+                    toast.info("Redirecting Shortly...", ToastOpt)
+                }, 7000);
+                const user = await axios.post(setapi, moddata, {
+                    headers: { Authorization: token }
+                })
+                navigate('/');
+            }
+        }
+        catch (error) {
+            toast.error(error.response?.data?.message || "Please Try again later", ToastOpt);
         }
     }
     return (
@@ -138,8 +157,8 @@ const Updatedata = () => {
                             </div>
                         </div>
                         <div className='flex gap-20 p-10 w-full justify-evenly'>
-                            <button type='submit' className='rounded-xl p-4 bg-green-500'><h4>Update</h4></button>
-                            <button onClick={() => { navigate("/workoutplan") }} className='rounded-xl p-4 bg-green-500'><h4>Start Workout</h4></button>
+                            <button type='submit' className='rounded-xl p-4 bg-green-500'><p>Update</p></button>
+                            <button onClick={() => { navigate("/workoutplan") }} className='rounded-xl p-4 bg-green-500'><p>Start Workout</p></button>
                         </div>
                     </div>
                     <div className='flex-1 flex flex-col p-10 gap-10'>
@@ -159,6 +178,7 @@ const Updatedata = () => {
                 </form>
             )
             }
+            <ToastContainer />
         </div >
     )
 }
