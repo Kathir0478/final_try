@@ -35,6 +35,10 @@ const Startworkout = () => {
         setCount(count + 1)
         update({ reward: given })
     }
+    const handlePrev = (given) => {
+        setCount(count - 1);
+        update({ reward: (given * -1) })
+    }
     async function update({ reward, count }) {
         try {
             const moddata = { reward, count }
@@ -68,14 +72,12 @@ const Startworkout = () => {
                     <IoFitnessOutline className='size-10 text-green-500' />
                     <h2>Home<span className='text-green-500'>Pulse</span></h2>
                 </div>
-                <div className='flex items-center'>
-                    <button onClick={() => { navigate('/') }}><h4>Back to <span className='text-green-500'>Home</span></h4></button>
-                </div>
+                <button onClick={() => { navigate('/') }} className='flex items-center cursor-pointer'><h4>Back to <span className='text-green-500'>Home</span></h4></button>
             </div>
 
             {plan.length !== 0 ?
                 (<div className='flex flex-col w-full h-full justify-center items-center'>
-                    <div className='flex flex-col items-center justify-center p-20 w-1/2 h-auto border-2 border-green-500 rounded-3xl bg-gray-600 shadow-lg shadow-green-500'>
+                    <div className='flex flex-col items-center justify-center py-10 lg:p-20 w-3/4 lg:w-1/2 h-auto border-1 border-green-500 rounded-3xl bg-gray-600 shadow-lg shadow-green-500'>
                         {plan.map((value, index) => (
                             <div key={index}>
                                 {count === index && (
@@ -84,8 +86,8 @@ const Startworkout = () => {
                                         <h4 className='text-center italic p-5'>{value.guide}</h4>
                                         <h4>Repeat this for <span className='text-green-500'>{value.time}</span> times</h4>
                                         <div className='p-10 flex w-full justify-evenly'>
-                                            <button className='bg-red-500 p-3 rounded-xl w-40 ' onClick={() => { setCount(count - 1) }}><p>Previous</p></button>
-                                            <button className='bg-green-500 p-3 rounded-xl w-40' onClick={() => { handleNext(value.reward) }}><p>Next</p></button>
+                                            <button className='bg-red-500 p-3 rounded-xl w-40 cursor-pointer' onClick={() => { handlePrev(value.reward) }}><p>Previous</p></button>
+                                            <button className='bg-green-500 p-3 rounded-xl w-40 cursor-pointer' onClick={() => { handleNext(value.reward) }}><p>Next</p></button>
                                         </div>
                                     </div>
                                 )}
@@ -95,19 +97,19 @@ const Startworkout = () => {
                             <div className='flex flex-col gap-20 items-center'>
                                 <h2>Lets get <span className='text-green-500'>Started!!!</span></h2>
                                 <p className='text-center italic'>Whether you're here for strength, endurance, or just to feel good, your journey starts NOW. Get up, get moving, and let’s make every workout count!</p>
-                                <button className='bg-green-500 p-3 rounded-xl w-30' onClick={() => { setCount(0) }}><p>Start</p></button>
+                                <button className='bg-green-500 p-3 rounded-xl w-30 cursor-pointer' onClick={() => { setCount(0) }}><p>Start</p></button>
                             </div>
                         )}
                         {count === plan.length && (
-                            <div className='flex flex-col gap-10 items-center'>
+                            <div className='flex flex-col gap-10 items-center p-10'>
                                 <h2>Have You <span className='text-green-500'>Completed?</span></h2>
                                 <h4 className='italic text-center flex flex-col'>
                                     <span>Great job! Keep pushing, keep growing, and remember-</span>
                                     <span>every rep counts</span>
                                 </h4>
-                                <div className='flex gap-10'>
-                                    <button className='bg-red-500 p-3 rounded-xl w-30' onClick={() => { setCount(0) }}><p>No</p></button>
-                                    <button className='bg-green-500 p-3 rounded-xl w-30' onClick={() => { update({ count: 1, reward: 50 }) }}><p>Yes</p></button>
+                                <div className='flex gap-14'>
+                                    <button className='bg-red-500 p-3 rounded-xl w-30 cursor-pointer' onClick={() => { setCount(0) }}><p>No</p></button>
+                                    <button className='bg-green-500 p-3 rounded-xl w-30 cursor-pointer' onClick={() => { update({ count: 1, reward: 50 }) }}><p>Yes</p></button>
                                 </div>
                             </div>
                         )}

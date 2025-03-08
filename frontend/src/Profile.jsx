@@ -38,8 +38,8 @@ const Profile = () => {
         fetchdata()
     }, [token])
     return (
-        <div className='w-screen h-screen bg-gray-950 text-white flex flex-col'>
-            <div className='fixed w-full h-20 flex justify-between items-center p-20'>
+        <div className='w-full min-h-screen h-full bg-gray-950 text-white flex flex-col'>
+            <div className='fixed w-full h-20 flex justify-between items-center p-20 z-10'>
                 <h1 className='flex items-center'>
                     Home<span className='text-green-500 flex items-center gap-4'>Pulse<IoFitnessOutline className='size-10' /></span>
                 </h1>
@@ -49,7 +49,7 @@ const Profile = () => {
             </div>
 
             <div className='flex flex-col items-center justify-center flex-1'>
-                <div className='flex flex-col gap-6 border border-green-500 bg-gray-900 p-10 w-full max-w-3xl rounded-3xl shadow-lg shadow-green-500 leading-relaxed'>
+                <div className='flex flex-col gap-6 border border-green-500 bg-gray-900 p-10 w-full lg:p-20 max-w-3xl rounded-3xl shadow-lg shadow-green-500 leading-relaxed'>
                     <h2 className='text-green-500 text-center '>Your Fitness Journey Unfolds</h2>
 
                     <div className='flex flex-col items-center gap-1'>

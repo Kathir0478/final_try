@@ -13,7 +13,7 @@ const Card = ({ day, plan, index, selected, setSelected }) => {
         <div className='flex flex-col gap-5 p-10 bg-gray-600 rounded-3xl'>
             <div className='flex justify-between w-full'>
                 <h2 className='text-green-500'>{day}</h2>
-                <button onClick={() => setSelected(index)} className='bg-green-500 rounded-lg w-30'>
+                <button onClick={() => setSelected(index)} className='bg-green-500 rounded-lg w-30 cursor-pointer'>
                     {selected === index ? <span onClick={() => { navigate('/session', { state: plan }) }}>Select</span> : "View"}
                 </button>
             </div>
@@ -64,15 +64,13 @@ const Workouts = () => {
         setSelected(prev => prev === index ? -1 : index)
     }
     return (
-        <div className='bg-gray-950 h-full min-h-screen text-white relative bg-fixed flex flex-col'>
+        <div className='bg-gray-950 h-full min-h-screen w-screen text-white relative bg-fixed flex flex-col'>
             <div className='fixed w-full h-20 bg-gray-950 flex justify-between px-10 py-15'>
                 <div className='flex gap-10 items-center'>
                     <IoFitnessOutline className='size-10 text-green-500' />
                     <h2>Home<span className='text-green-500'>Pulse</span></h2>
                 </div>
-                <div className='flex items-center'>
-                    <button onClick={() => { navigate('/') }}><h4>Back to <span className='text-green-500'>Home</span></h4></button>
-                </div>
+                <button onClick={() => { navigate('/') }} className='flex items-center cursor-pointer'><h4>Back to <span className='text-green-500'>Home</span></h4></button>
             </div>
             {(!workouts || Object.keys(workouts).length === 0) ?
                 (<div className='flex flex-col items-center gap-10 justify-center h-screen text-white'>
@@ -85,7 +83,8 @@ const Workouts = () => {
                         <p>Fill Your Workout Plan</p>
                     </button>
                 </div>) :
-                (<div className='flex my-25'>
+                (<div className='flex flex-col-reverse lg:flex-row my-25'>
+                    <h2 className='flex italic text-green-500 justify-center lg:hidden'>Let’s get started!</h2>
                     <div className='flex flex-col p-20 flex-1 gap-10' >
                         <h2><span className='text-green-500'>Your</span> Workout Plan</h2>
                         <div className='flex flex-col gap-5'>
@@ -94,14 +93,14 @@ const Workouts = () => {
                             ))}
                         </div>
                     </div>
-                    <div className='flex-1 flex flex-col p-20 w-full h-screen justify-center items-center'>
-                        <div className='flex flex-col leading-relaxed fixed w-2/5'>
-                            <div className='flex flex-col gap-1 p-5'>
+                    <div className='flex-1 flex flex-col p-10 px-14 w-full h-screen justify-center items-center'>
+                        <div className='flex flex-col leading-relaxed lg:fixed w-full lg:w-2/5 '>
+                            <div className='flex flex-col p-5'>
                                 <h2 className='text-green-500'>Unlock Your Best Self</h2>
                                 <h2>One Workout at a Time!</h2>
                             </div>
                             <p className='p-5'>Every journey begins with a decision—to show up, to put in the effort, and to become better than yesterday. This workout plan is not just a routine; it's a step toward a stronger, healthier, and more confident YOU. </p>
-                            <h2 className='italic text-green-500 p-5 py-20 text-center'>Let’s get started!</h2>
+                            <h2 className='hidden lg:flex italic text-green-500 p-5 py-20 text-center'>Let’s get started!</h2>
                         </div>
                     </div>
                 </div>)

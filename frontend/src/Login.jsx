@@ -48,7 +48,7 @@ const Login = () => {
     }
     return (
         <div className='flex justify-center items-center bg-gray-950 h-screen w-screen text-white'>
-            <div className='flex flex-col gap-10 border-green-500 border-2 rounded-lg p-16 shadow-lg shadow-green-500 items-center bg-gray-600' >
+            <div className='flex flex-col gap-10 border-green-500 border-2 rounded-lg p-16  shadow-lg shadow-green-500 items-center bg-gray-600' >
                 <h1 className='flex'>Home<span className='flex items-center text-green-500 gap-5'>Pulse<IoFitnessOutline /></span></h1>
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit} className='flex flex-col items-center'>
@@ -76,3 +76,5 @@ const Login = () => {
 }
 
 export default Login
+
+

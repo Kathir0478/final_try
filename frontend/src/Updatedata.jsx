@@ -89,17 +89,19 @@ const Updatedata = () => {
         }
     }
     return (
-        <div className='fixed top-0 left-0 w-screen h-screen flex flex-col bg-gray-950 text-white'>
-            <div className='flex justify-between p-10'>
+        <div className='lg:fixed top-0 left-0 w-screen h-full flex flex-col bg-gray-950 text-white'>
+            <div className='fixed top-0 left-0 flex justify-between p-10 bg-gray-950 w-full z-10'>
                 <div className='flex gap-10 items-center'>
                     <IoFitnessOutline className='size-10 text-green-500' />
                     <h2>Home<span className='text-green-500'>Pulse</span></h2>
                 </div>
-
-                <button onClick={() => { navigate('/') }}><h4>Back to <span className='text-green-500'>Home</span></h4></button>
+                <button onClick={() => { navigate('/') }} className='cursor-pointer'><h4>Back to <span className='text-green-500'>Home</span></h4></button>
             </div>
             {userdata && (
-                <form onSubmit={handleSubmit} className='flex items-center gap-5 px-40 '>
+                <form onSubmit={handleSubmit} className='mt-25 px-5 pt-10 pb-20 lg:p-10 lg:mt-25 flex flex-col-reverse lg:flex-row items-center gap-5 lg:px-40 '>
+                    <h4 className='flex flex-col w-full text-center lg:hidden py-14'>
+                        <span className='text-green-500'>Take control of your fitness journey! </span> Update details to get the best results.
+                    </h4>
                     <div className='flex-1 border-green-500 border-1 rounded-lg p-10 bg-gray-600 shadow-lg shadow-green-500'>
                         <div className='flex flex-col gap-3'>
                             <div className='flex gap-5 items-center'>
@@ -153,12 +155,12 @@ const Updatedata = () => {
                             </div>
                             <div className='flex gap-5 items-center'>
                                 <p className='w-56 italic'>Description </p>
-                                <textarea className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 ' name='description' value={moddata.description} onChange={handleChange} />
+                                <textarea className='bg-gray-950 border-1 h-30 rounded-lg border-green-500 p-2 w-full pl-5 resize-none' name='description' value={moddata.description} onChange={handleChange} />
                             </div>
                         </div>
                         <div className='flex gap-20 p-10 w-full justify-evenly'>
-                            <button type='submit' className='rounded-xl p-4 bg-green-500'><p>Update</p></button>
-                            <button onClick={() => { navigate("/workoutplan") }} className='rounded-xl p-4 bg-green-500'><p>Start Workout</p></button>
+                            <button type='submit' className='rounded-xl p-4 bg-green-500 cursor-pointer'><p>Update</p></button>
+                            <button onClick={() => { navigate("/workoutplan") }} className='rounded-xl p-4 bg-green-500 cursor-pointer'><p>Start Workout</p></button>
                         </div>
                     </div>
                     <div className='flex-1 flex flex-col p-10 gap-10'>
@@ -166,18 +168,17 @@ const Updatedata = () => {
                         <p>
                             Your fitness journey evolves, and so should your workout plan! Keep your goals aligned with your progress by updating your details. By refreshing your information, you’ll ensure that your fitness plan stays accurate and effective.
                         </p>
-                        <ul className='flex flex-col gap-3 indent-20'>
+                        <ul className='flex flex-col gap-3'>
                             <li><p>Get workouts that match your current fitness level</p></li>
                             <li><p>Adjust your plan based on your progress & new goals</p></li>
                             <li><p>Stay on track with personalized recommendations</p></li>
                         </ul>
-                        <h4>
-                            <span className='text-green-500'>Take control of your fitness journey! </span> Update your details now to continue getting the best results.
+                        <h4 className='hidden lg:flex flex-col w-full text-center'>
+                            <span className='text-green-500'>Take control of your fitness journey! </span> Update details to get the best results.
                         </h4>
                     </div>
                 </form>
-            )
-            }
+            )}
             <ToastContainer />
         </div >
     )
