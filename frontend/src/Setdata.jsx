@@ -7,7 +7,7 @@ const Setdata = () => {
     const navigate = useNavigate()
     const base_api = "http://localhost:5000"
     const api = `${base_api}/api/setdata`
-    const [moddata, setmoddata] = useState({ age: "", height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
+    const [moddata, setmoddata] = useState({ age: "", gender: "", height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
     const token = localStorage.getItem("token")
     useEffect(() => {
         if (!token) {
@@ -60,24 +60,37 @@ const Setdata = () => {
                 </div>
             </div>
             <form onSubmit={handleSubmit} className='flex items-center gap-5 px-40'>
-                <div className='flex-1 border-green-500 border-1 rounded-lg p-20'>
-                    <div className='flex flex-col gap-5'>
+                <div className='flex-1 border-green-500 border-1 rounded-lg p-20 bg-gray-600 shadow-lg shadow-green-500'>
+                    <div className='flex flex-col gap-5 '>
                         <div className='flex gap-5 items-center'>
-                            <p className='w-56'>Age </p>
-                            <input type='number' placeholder="Enter age between 18-100" name='age' value={moddata.age} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                            <p className='w-56 italic'>Age </p>
+                            <input type='number' placeholder="Enter age between 18-100" name='age' value={moddata.age} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
                         </div>
                         <div className='flex gap-5 items-center'>
-                            <p className='w-56'>Height </p>
-                            <input type='number' placeholder="Enter valid height in cm" name='height' value={moddata.height} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                            <p className='w-56 italic'>Height </p>
+                            <input type='number' placeholder="Enter valid height in cm" name='height' value={moddata.height} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
                         </div>
                         <div className='flex gap-5 items-center'>
-                            <p className='w-56'>weight </p>
-                            <input type='number' placeholder="Enter valid weight in kg" name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                            <p className='w-56 italic'>weight </p>
+                            <input type='number' placeholder="Enter valid weight in kg" name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                        </div>
+                        <div className="flex gap-5 items-center">
+                            <p className="w-56 italic">Gender</p>
+                            <div className="border-1 rounded-lg border-green-500 p-2 w-full flex justify-evenly bg-gray-950">
+                                <label className="flex gap-2">
+                                    <input type="radio" name="gender" value="Male" checked={moddata.gender === "Male"} onChange={handleChange} />
+                                    Male
+                                </label>
+                                <label className="flex gap-2">
+                                    <input type="radio" name="gender" value="Female" checked={moddata.gender === "Female"} onChange={handleChange} />
+                                    Female
+                                </label>
+                            </div>
                         </div>
                         <div className='flex items-center gap-5'>
-                            <p className='w-56'>Fitness Level </p>
-                            <label className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5  w-full'>
-                                <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-600' required>
+                            <p className='w-56 italic'>Fitness Level </p>
+                            <label className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full'>
+                                <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-950' required>
                                     <option value="">Select your current fitness level</option>
                                     <option value="Beginner">Beginner</option>
                                     <option value="Intermediate">Intermediate</option>
@@ -86,9 +99,9 @@ const Setdata = () => {
                             </label>
                         </div>
                         <div className='flex items-center gap-5'>
-                            <p className='w-56'>Goal </p>
-                            <label className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full bg-gray-600'>
-                                <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-600 outline-none' required>
+                            <p className='w-56 italic'>Goal </p>
+                            <label className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full bg-gray-950'>
+                                <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-950 outline-none' required>
                                     <option value="">What is your goal</option>
                                     <option value="General Fitness">General Fitness</option>
                                     <option value="Muscle Building">Muscle Building</option>
@@ -100,12 +113,12 @@ const Setdata = () => {
                             </label>
                         </div>
                         <div className='flex items-center gap-5'>
-                            <p className='w-56'>Frequency </p>
-                            <input type='number' placeholder="Days to spend in week" name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
+                            <p className='w-56 italic'>Frequency </p>
+                            <input type='number' placeholder="Days to spend in week" name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' required />
                         </div>
                         <div className='flex items-center gap-5'>
-                            <p className='w-56'>Description </p>
-                            <textarea className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 w-full pl-5 ' placeholder="Any medical conditions" name='description' value={moddata.description} onChange={handleChange} />
+                            <p className='w-56 italic'>Description </p>
+                            <textarea className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 ' placeholder="Any medical conditions" name='description' value={moddata.description} onChange={handleChange} />
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ const Updatedata = () => {
     const getapi = `${base_api}/api/getdata`
     const setapi = `${base_api}/api/setdata`
     const [userdata, setUserdata] = useState(null)
-    const [moddata, setmoddata] = useState({ name: "", age: 0, gender: '', height: 0, weight: 0, fitlevel: "", goal: "", frequency: 0, description: "" })
+    const [moddata, setmoddata] = useState({ name: "", age: 0, height: 0, weight: 0, fitlevel: "", goal: "", frequency: 0, description: "" })
     const token = localStorage.getItem("token")
 
     async function fetchdata() {
@@ -77,46 +77,33 @@ const Updatedata = () => {
                 <button onClick={() => { navigate('/') }}><h4>Back to <span className='text-green-500'>Home</span></h4></button>
             </div>
             {userdata && (
-                <form onSubmit={handleSubmit} className='flex items-center gap-5 px-40'>
-                    <div className='flex-1 border-green-500 border-1 rounded-lg p-10'>
+                <form onSubmit={handleSubmit} className='flex items-center gap-5 px-40 '>
+                    <div className='flex-1 border-green-500 border-1 rounded-lg p-10 bg-gray-600 shadow-lg shadow-green-500'>
                         <div className='flex flex-col gap-3'>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>Name </p>
-                                <input type='text' placeholder={userdata.name} name='name' value={moddata.name} onChange={handleChange} className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full  bg-gray-600' />
+                                <p className='w-56 italic'>Name </p>
+                                <input type='text' placeholder={userdata.name} name='name' value={moddata.name} onChange={handleChange} className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full  bg-gray-950' />
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>Email </p>
-                                <p className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full opacity-50 cursor-not-allowed bg-gray-600'>{userdata.email}</p>
+                                <p className='w-56 italic'>Email </p>
+                                <p className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full opacity-50 cursor-not-allowed bg-gray-950'>{userdata.email}</p>
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>Age </p>
-                                <input type='number' placeholder={userdata.age} name='age' value={moddata.age} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
-                            </div>
-                            <div className="flex gap-5 items-center">
-                                <p className="w-56">Gender</p>
-                                <div className="border-1 rounded-lg border-green-500 p-2 w-full flex justify-evenly bg-gray-600">
-                                    <label className="flex gap-2">
-                                        <input type="radio" name="gender" value="Male" checked={moddata.gender === "Male"} onChange={handleChange} />
-                                        Male
-                                    </label>
-                                    <label className="flex gap-2">
-                                        <input type="radio" name="gender" value="Female" checked={moddata.gender === "Female"} onChange={handleChange} />
-                                        Female
-                                    </label>
-                                </div>
+                                <p className='w-56 italic'>Age </p>
+                                <input type='number' placeholder={userdata.age} name='age' value={moddata.age} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>Height </p>
-                                <input type='number' placeholder={userdata.height} name='height' value={moddata.height} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                                <p className='w-56 italic'>Height </p>
+                                <input type='number' placeholder={userdata.height} name='height' value={moddata.height} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>weight </p>
-                                <input type='number' placeholder={userdata.weight} name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                                <p className='w-56 italic'>weight </p>
+                                <input type='number' placeholder={userdata.weight} name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>Fitness Level </p>
-                                <label className='border-1 rounded-lg border-green-500 p-2 pl-5 bg-gray-600 w-full'>
-                                    <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-600'>
+                                <p className='w-56 italic'>Fitness Level </p>
+                                <label className='border-1 rounded-lg border-green-500 p-2 pl-5 bg-gray-950 w-full'>
+                                    <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-950'>
                                         <option value="">{userdata.fitlevel}</option>
                                         <option value="Beginner">Beginner</option>
                                         <option value="Intermediate">Intermediate</option>
@@ -125,9 +112,9 @@ const Updatedata = () => {
                                 </label>
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>Goal </p>
-                                <label className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full bg-gray-600'>
-                                    <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-600 outline-none'>
+                                <p className='w-56 italic'>Goal </p>
+                                <label className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full bg-gray-950'>
+                                    <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-950 outline-none'>
                                         <option value="">{userdata.goal}</option>
                                         <option value="General Fitness">General Fitness</option>
                                         <option value="Muscle Building">Muscle Building</option>
@@ -139,17 +126,17 @@ const Updatedata = () => {
                                 </label>
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>Frequency </p>
-                                <input type='number' placeholder={moddata.frequency} name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                                <p className='w-56 italic'>Frequency </p>
+                                <input type='number' placeholder={moddata.frequency} name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <p className='w-56'>Description </p>
-                                <textarea className='bg-gray-600 border-1 rounded-lg border-green-500 p-2 w-full pl-5 ' name='description' value={moddata.description} onChange={handleChange} />
+                                <p className='w-56 italic'>Description </p>
+                                <textarea className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 ' name='description' value={moddata.description} onChange={handleChange} />
                             </div>
                         </div>
                         <div className='flex gap-20 p-10 w-full justify-evenly'>
-                            <button type='submit' className='border-1 rounded-xl p-4 border-green-500 shadow-lg shadow-green-500'><h4>Update</h4></button>
-                            <button onClick={() => { navigate("/workoutplan") }} className='border-1 rounded-xl p-4 border-green-500 shadow-lg shadow-green-500'><h4>Start Workout</h4></button>
+                            <button type='submit' className='rounded-xl p-4 bg-green-500'><h4>Update</h4></button>
+                            <button onClick={() => { navigate("/workoutplan") }} className='rounded-xl p-4 bg-green-500'><h4>Start Workout</h4></button>
                         </div>
                     </div>
                     <div className='flex-1 flex flex-col p-10 gap-10'>
