@@ -1,25 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { IoFitnessOutline } from "react-icons/io5"
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastOpt } from "./assets/ToastOpt"
+import { demo } from './assets/demo'
 const Login = () => {
     const navigate = useNavigate();
-    const base_api = "http://localhost:5000"
-    const api = `${base_api}/api/login`
+    const api = demo.login
     const [userdata, setUserdata] = useState({ email: "", password: "" })
+    const token = localStorage.getItem("token")
+    useEffect(() => {
+        if (token) {
+            navigate("/")
+        }
+    }, [token])
+
     const handleChange = (event) => {
         setUserdata({ ...userdata, [event.target.name]: event.target.value })
     }
     const handleSubmit = async (event) => {
         try {
             event.preventDefault()
+            if (!userdata.email) {
+                toast.error("Kinldy Provide valid email", ToastOpt)
+                return;
+            }
+            if (userdata.password.length < 4) {
+                toast.error("Kindly provide valid password", ToastOpt)
+                return;
+            }
             const result = await axios.post(api, userdata)
             localStorage.setItem("token", result.data.token)
-            navigate('/')
+            toast.success("Login Successfull", ToastOpt)
+            setTimeout(() => {
+                navigate('/')
+            }, 1000)
         }
         catch (error) {
-            alert(error.response.data.message)
+            toast.error(error.response?.data?.message || "Error logging in, try again later", ToastOpt);
         }
     }
     const handleReset = () => {
@@ -34,11 +54,11 @@ const Login = () => {
                     <div className='flex flex-col gap-5 w-full'>
                         <div className='flex gap-5 items-center p-5'>
                             <p className='text-green-500 w-24 text-right italic'>Email:</p>
-                            <input type='email' placeholder='user@gmail.com' name='email' value={userdata.email} onChange={handleChange} className='text-xl border-green-500 border-1 rounded-xl p-2 justify-center bg-gray-950' required />
+                            <input type='email' placeholder='user@gmail.com' name='email' value={userdata.email} onChange={handleChange} className='text-xl border-green-500 border-1 rounded-xl p-2 justify-center bg-gray-950' />
                         </div>
                         <div className='flex gap-5 items-center p-5'>
                             <p className='text-green-500 w-24 text-right italic'>Password:</p>
-                            <input type='password' placeholder='******' name='password' value={userdata.password} onChange={handleChange} className='text-xl border-green-500 border-1 rounded-xl bg-gray-950 p-2 justify-center' required />
+                            <input type='password' placeholder='******' name='password' value={userdata.password} onChange={handleChange} className='text-xl border-green-500 border-1 rounded-xl bg-gray-950 p-2 justify-center' />
                         </div>
                     </div>
 
@@ -49,6 +69,7 @@ const Login = () => {
                     <p>Don't have an account? <Link to="/signup" className='text-green-500 font-bold italic'>Sign up</Link></p>
                 </form>
             </div >
+            <ToastContainer />
         </div >
     )
 }
