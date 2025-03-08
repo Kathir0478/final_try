@@ -72,7 +72,7 @@ const Workouts = () => {
                     <button onClick={() => { navigate('/') }}><h4>Back to <span className='text-green-500'>Home</span></h4></button>
                 </div>
             </div>
-            <div className='flex my-25'>
+            {workouts && <div className='flex my-25'>
                 <div className='flex flex-col p-20 flex-1 gap-10' >
                     <h2><span className='text-green-500'>Your</span> Workout Plan</h2>
                     <div className='flex flex-col gap-5'>
@@ -91,7 +91,20 @@ const Workouts = () => {
                         <h2 className='italic text-green-500 p-5 py-20 text-center'>Let’s get started!</h2>
                     </div>
                 </div>
-            </div>
+            </div>}
+            {(!workouts || Object.keys(workouts).length === 0) && (
+                <div className='flex flex-col items-center gap-10 justify-center h-screen text-white'>
+                    <h2 className='text-green-500 '>No Workout Plan Found</h2>
+                    <p className='text-white text-center flex flex-col gap-2 leading-relaxed '>
+                        <p>It looks like you haven't set up your workout plan yet.</p>
+                        <p>Start your fitness journey by filling in your details now!</p>
+                    </p>
+                    <button className='px-10 py-4 m-10 bg-green-500 text-white rounded-lg ' onClick={() => navigate('/setdata')}>
+                        <p>Fill Your Workout Plan</p>
+                    </button>
+                </div>
+            )}
+
         </div>
     )
 }

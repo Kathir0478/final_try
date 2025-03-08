@@ -7,13 +7,29 @@ const Setdata = () => {
     const navigate = useNavigate()
     const base_api = "http://localhost:5000"
     const api = `${base_api}/api/setdata`
+    const verifyapi = `${base_api}/api/verify`
     const [moddata, setmoddata] = useState({ age: "", gender: "", height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
     const token = localStorage.getItem("token")
     useEffect(() => {
         if (!token) {
             navigate("/error")
         }
+        verify()
     }, [])
+    async function verify() {
+        try {
+            const user = await axios.get(verifyapi, {
+                headers: { Authorization: token }
+            })
+        } catch (error) {
+            if (error.response && error.response.status == 403) {
+                navigate('/updatedata')
+            }
+            else {
+                console.error("Error fetching data:", error);
+            }
+        }
+    }
     function validate() {
         if (Number(moddata.age) < 18 || Number(moddata.age) > 100) {
             alert("Enter valid age");

@@ -17,6 +17,9 @@ const Updatedata = () => {
             const user = await axios.get(getapi, {
                 headers: { Authorization: token }
             })
+            if (!user.data.workout_plan) {
+                navigate("/setdata")
+            }
             setUserdata(user.data)
             setmoddata(user.data)
         } catch (error) {
