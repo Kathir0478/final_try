@@ -49,7 +49,7 @@ def fetch():
     {{
     "Day": [
         {{"exercise": "Exercise Name in short",
-        "guide": "Description of how to do the exercises",
+        "guide": "Description of how to do the exercises (Don't mention to refer pervious days)",
         "time": "Total number of single reps as a whole number only the number needed",
         "reward":"Suitable rating of this exercise out of 100"   }},...
     ],...

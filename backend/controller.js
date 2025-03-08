@@ -1,4 +1,4 @@
-const User = require('./models/user')
+const User = require('./user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -97,4 +97,24 @@ async function progressupdate(req, res) {
     }
 }
 
-module.exports = { login, signup, getdata, update, progressupdate };
+async function verify(req, res) {
+    try {
+        if (!req.user || !req.user.id) {
+            return res.status(403).json({ "message": "Access denied. No token provided." });
+        }
+        const userId = req.user.id;
+        const data = await User.findOne({ _id: userId });
+        if (!data) {
+            return res.status(404).json({ "message": "User data not found." });
+        }
+        const { password, __v, _id, workout_plan, ...result } = data.toObject();
+        if (workout_plan) {
+            return res.status(403).json({ "message": "Data already set please update" });
+        }
+        return res.status(200).json({ "message": "Data to be defined" });
+    } catch (error) {
+        return res.status(500).json({ "message": "Internal Server Error", "error": error.message });
+    }
+}
+
+module.exports = { login, signup, getdata, update, progressupdate, verify };
