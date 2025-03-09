@@ -6,6 +6,8 @@ import { demo } from './assets/demo'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastOpt } from "./assets/ToastOpt"
+import { motion } from 'framer-motion'
+import { framer } from './assets/framer'
 
 const Profile = () => {
     const navigate = useNavigate()
@@ -51,26 +53,26 @@ const Profile = () => {
     }, [navigate, token]);
 
     return (
-        <div className='w-full min-h-screen h-full bg-gray-950 text-white flex flex-col'>
-            <div className='fixed w-full h-20 flex justify-between items-center p-20 z-10'>
+        <motion.div initial="hidden" animate="visible" className='w-full min-h-screen h-full bg-gray-950 text-white flex flex-col' >
+            <motion.div variants={framer.innerBoxVariant} className='fixed w-full h-20 flex justify-between items-center p-20 z-10'>
                 <h1 className='flex items-center'>
                     Home<span className='text-green-500 flex items-center gap-4'>Pulse<IoFitnessOutline className='size-10' /></span>
                 </h1>
                 <button onClick={() => navigate("/")} className='cursor-pointer '>
-                    <h4>Back to <span className='text-green-500'>Home</span></h4>
+                    <motion.h4 variants={framer.buttonOnHover} whileHover="hover">Back to <span className='text-green-500'>Home</span></motion.h4>
                 </button>
-            </div>
+            </motion.div>
 
-            <div className='flex flex-col items-center justify-center flex-1'>
-                <div className='flex flex-col gap-6 border border-green-500 bg-gray-900 p-10 w-full lg:p-20 max-w-3xl rounded-3xl shadow-lg shadow-green-500 leading-relaxed'>
-                    <h2 className='text-green-500 text-center '>Your Fitness Journey Unfolds</h2>
+            <motion.div variants={framer.innerBoxVariant} className='flex flex-col items-center justify-center flex-1'>
+                <motion.div variants={framer.outerBoxVariant} className='flex flex-col gap-6 border border-green-500 bg-gray-900 p-10 w-full lg:p-20 max-w-3xl rounded-3xl shadow-lg shadow-green-500 leading-relaxed'>
+                    <motion.h2 variants={framer.innerBoxVariant} className='text-green-500 text-center '>Your Fitness Journey Unfolds</motion.h2>
 
-                    <div className='flex flex-col items-center gap-1'>
+                    <motion.div variants={framer.innerBoxVariant} className='flex flex-col items-center gap-1'>
                         <h4><span className='text-green-500'>{userData.name}</span></h4>
                         <p className='opacity-50'>{userData.email}</p>
-                    </div>
+                    </motion.div>
 
-                    <div className='flex flex-col gap-4'>
+                    <motion.div variants={framer.innerBoxVariant} className='flex flex-col gap-4'>
                         <h4>Total Streak: <span className='text-green-500'>{userData.visits}</span> days</h4>
                         <h4>Current Level: <span className='text-green-500'>{proglevel.level}</span></h4>
 
@@ -81,13 +83,13 @@ const Profile = () => {
                             />
                         </div>
                         <h4 className='text-center'>Points to next level: <span className='text-green-500'>{proglevel.levelup}</span></h4>
-                    </div>
+                    </motion.div>
 
-                    <h4 className='w-full text-center p-5 italic text-green-500'>Your progress matters – Keep pushing forward!</h4>
-                </div>
-            </div>
+                    <motion.h4 variants={framer.innerBoxVariant} className='w-full text-center p-5 italic text-green-500'>Your progress matters – Keep pushing forward!</motion.h4>
+                </motion.div>
+            </motion.div>
             <ToastContainer />
-        </div>
+        </motion.div >
     )
 }
 

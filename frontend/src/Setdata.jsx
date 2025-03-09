@@ -6,6 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastOpt } from "./assets/ToastOpt"
 import { demo } from './assets/demo'
+import { motion } from 'framer-motion'
+import { framer } from './assets/framer'
 
 const Setdata = () => {
     const navigate = useNavigate()
@@ -99,19 +101,19 @@ const Setdata = () => {
         }
     };
     return (
-        <div className='lg:fixed bg-fixed top-0 left-0 w-screen h-full min-h-screen flex flex-col bg-gray-950 text-white'>
-            <div className='fixed top-0 left-0 flex justify-between p-10 z-10 bg-gray-950 w-full '>
+        <motion.div initial="hidden" animate="visible" className='lg:fixed bg-fixed top-0 left-0 w-screen h-full min-h-screen flex flex-col bg-gray-950 text-white'>
+            <motion.div variants={framer.outerBoxVariant} className='fixed top-0 left-0 flex justify-between p-10 z-10 bg-gray-950 w-full '>
                 <div className='flex gap-10 items-center'>
                     <IoFitnessOutline className='size-10 text-green-500' />
                     <h2>Home<span className='text-green-500'>Pulse</span></h2>
                 </div>
-            </div>
+            </motion.div>
             <form onSubmit={handleSubmit} className='lg:mt-35 flex flex-col-reverse lg:flex-row items-center gap-5 p-20 lg:py-0 lg:px-40'>
-                <button type='submit' className='flex w-full justify-center lg:hidden p-16'>
-                    <p className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500 cursor-pointer'>Get Started</p>
-                </button>
-                <div className='flex-1 border-green-500 border-1 rounded-lg p-20 bg-gray-600 shadow-lg shadow-green-500'>
-                    <div className='flex flex-col gap-5 '>
+                <motion.button variants={framer.fromBottomVariant} type='submit' className='flex w-full justify-center lg:hidden p-16'>
+                    <motion.p variants={framer.buttonOnHover} whileHover="hover" className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500 cursor-pointer'>Get Started</motion.p>
+                </motion.button>
+                <motion.div variants={framer.fromLeftVariant} className='flex-1 border-green-500 border-1 rounded-lg p-20 bg-gray-600 shadow-lg shadow-green-500'>
+                    <div variants={framer.fromLeftVariant} className='flex flex-col gap-5 '>
                         <div className='flex gap-5 items-center'>
                             <p className='w-56 italic'>Age </p>
                             <input type='number' placeholder="Enter age between 18-100" name='age' value={moddata.age} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
@@ -171,8 +173,8 @@ const Setdata = () => {
                             <textarea className='bg-gray-950 h-30 border-1 rounded-lg border-green-500 p-2 w-full pl-5 resize-none' placeholder="Any medical conditions" name='description' value={moddata.description} onChange={handleChange} />
                         </div>
                     </div>
-                </div>
-                <div className='flex-1 flex flex-col mt-14 lg:p-10 gap-10 pb-20'>
+                </motion.div>
+                <motion.div variants={framer.fromRightVariant} className='flex-1 flex flex-col mt-14 lg:p-10 gap-10 pb-20'>
                     <h2 className='flex flex-col'><span className='text-green-500'>Enter Your Details & </span><span>Get Your Perfect Workout Plan!</span> </h2>
                     <p>
                         Unlock a personalized fitness plan tailored to your goals, lifestyle, and fitness level. By entering your details, you’ll get an accurate workout plan that helps you:
@@ -187,12 +189,12 @@ const Setdata = () => {
                         <span> Let us know about you and transform together</span>
                     </h4>
                     <button type='submit' className=' hidden lg:flex w-full justify-center '>
-                        <p className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500 cursor-pointer'>Get Started</p>
+                        <motion.p variants={framer.buttonOnHover} whileHover="hover" className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500 cursor-pointer'>Get Started</motion.p>
                     </button>
-                </div>
+                </motion.div>
                 <ToastContainer />
             </form >
-        </div >
+        </motion.div >
     )
 }
 

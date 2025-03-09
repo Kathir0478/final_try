@@ -6,6 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastOpt } from "./assets/ToastOpt"
 import { demo } from './assets/demo'
+import { motion } from 'framer-motion'
+import { framer } from './assets/framer'
 
 
 const Signup = () => {
@@ -64,36 +66,36 @@ const Signup = () => {
         setConfirm("")
     }
     return (
-        <div className='flex justify-center items-center bg-gray-950 h-screen w-screen text-white'>
-            <div className='flex flex-col gap-10 border-green-500 border-2 rounded-lg py-10 px-22 lg:px-30 lg:py-10 shadow-lg shadow-green-500 items-center bg-gray-600'>
-                <h1 className='flex'>Home<span className='flex items-center text-green-500 gap-5'>Pulse<IoFitnessOutline /></span></h1>
-                <h2>Signup</h2>
-                <form onSubmit={handleSubmit} className='flex flex-col items-center gap-10'>
+        <motion.div initial="hidden" animate="visible" className='flex justify-center items-center bg-gray-950 h-screen w-screen text-white'>
+            <motion.div variants={framer.outerBoxVariant} className='flex flex-col gap-10 border-green-500 border-2 rounded-lg py-10 px-22 lg:px-30 lg:py-10 shadow-lg shadow-green-500 items-center bg-gray-600'>
+                <motion.h1 variants={framer.innerBoxVariant} className='flex'>Home<span className='flex items-center text-green-500 gap-5'>Pulse<IoFitnessOutline /></span></motion.h1>
+                <motion.h2 variants={framer.innerBoxVariant}>Signup</motion.h2>
+                <motion.form variants={framer.innerBoxVariant} onSubmit={handleSubmit} className='flex flex-col items-center gap-10'>
                     <div className='flex gap-5 items-center'>
-                        <p className='text-green-500 w-24 text-right italic'>Name: </p>
+                        <p className='w-24 text-right italic'>Name: </p>
                         <input type='text' placeholder='User' name='name' value={userdata.name} onChange={handleChange} className='text-xl border-green-500 border-1 rounded-xl bg-gray-950 p-2 justify-center ' />
                     </div>
                     <div className='flex gap-5 items-center'>
-                        <p className='text-green-500 w-24 text-right italic'>Email: </p>
+                        <p className='w-24 text-right italic'>Email: </p>
                         <input type='email' placeholder='User@gmail.com' name='email' value={userdata.email} onChange={handleChange} className='text-xl border-green-500 border-1 rounded-xl bg-gray-950 p-2 justify-center' />
                     </div>
                     <div className='flex gap-5 items-center'>
-                        <p className='text-green-500 w-24 text-right italic'>Password: </p>
+                        <p className='w-24 text-right italic'>Password: </p>
                         <input type='password' placeholder='******' name='password' value={userdata.password} onChange={handleChange} className='text-xl border-green-500 border-1 rounded-xl bg-gray-950 p-2 justify-center' />
                     </div>
                     <div className='flex gap-5 items-center'>
-                        <p className='text-green-500 w-24 text-right italic'>Confirm Password:</p>
+                        <p className='w-24 text-right italic'>Confirm Password:</p>
                         <input type='password' placeholder='******' name='confirm' value={confirm} onChange={handleChange} className='text-xl border-green-500 border-1 rounded-xl bg-gray-950 p-2 justify-center' />
                     </div>
                     <div className='flex justify-around w-full p-5'>
-                        <button type='submit'><h4 className='text-green-500 cursor-pointer'>Submit</h4></button>
-                        <button onClick={handleReset}><h4 className='cursor-pointer'>Reset</h4></button>
+                        <motion.button variants={framer.buttonOnHover} whileHover="hover" type='submit'><h4 className='text-green-500 cursor-pointer'>Submit</h4></motion.button>
+                        <motion.button variants={framer.buttonOnHover} whileHover="hover" onClick={handleReset}><h4 className='cursor-pointer'>Reset</h4></motion.button>
                     </div>
                     <p>Already have an account? <Link to='/login' className='text-green-500 font-bold italic'>Login</Link></p>
-                </form>
-            </div>
+                </motion.form>
+            </motion.div>
             <ToastContainer />
-        </div>
+        </motion.div>
     )
 }
 
