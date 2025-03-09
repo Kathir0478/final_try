@@ -59,7 +59,7 @@ async function getdata(req, res) {
 
 async function update(req, res) {
     try {
-        const api = "http://127.0.0.1:5001"
+        const api = process.env.GEN_AI_API_KEY
         if (!req.user || !req.user.id) {
             return res.status(403).json({ "message": "Access denied. No token provided." });
         }
