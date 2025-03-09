@@ -117,4 +117,5 @@ async function verify(req, res) {
     }
 }
 
+
 module.exports = { login, signup, getdata, update, progressupdate, verify };

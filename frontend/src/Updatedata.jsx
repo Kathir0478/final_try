@@ -160,7 +160,7 @@ const Updatedata = () => {
                         </div>
                         <div className='flex gap-20 p-10 w-full justify-evenly'>
                             <button type='submit' className='rounded-xl p-4 bg-green-500 cursor-pointer'><p>Update</p></button>
-                            <button onClick={() => { navigate("/workoutplan") }} className='rounded-xl p-4 bg-green-500 cursor-pointer'><p>Start Workout</p></button>
+                            <button type='button' onClick={() => { navigate("/workoutplan") }} className='rounded-xl p-4 bg-green-500 cursor-pointer'><p>Start Workout</p></button>
                         </div>
                     </div>
                     <div className='flex-1 flex flex-col p-10 gap-10'>

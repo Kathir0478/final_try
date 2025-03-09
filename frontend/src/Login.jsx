@@ -12,6 +12,7 @@ const Login = () => {
     const api = demo.login
     const [userdata, setUserdata] = useState({ email: "", password: "" })
     const token = localStorage.getItem("token")
+
     useEffect(() => {
         if (token) {
             navigate("/")
