@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastOpt } from "./assets/ToastOpt"
 
+
 const Card = ({ day, plan, index, selected, setSelected }) => {
     const navigate = useNavigate()
     return (
@@ -56,10 +57,22 @@ const Workouts = () => {
     }
     useEffect(() => {
         if (!token) {
-            navigate("/error")
+            navigate("/");
+            return;
         }
-        fetchdata()
-    }, [])
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const timeLeft = payload.exp * 1000 - Date.now();
+        if (timeLeft <= 0) {
+            localStorage.removeItem("token");
+            navigate("/");
+        } else {
+            setTimeout(() => {
+                localStorage.removeItem("token");
+                navigate("/");
+            }, timeLeft);
+        }
+        fetchdata();
+    }, [navigate, token]);
     const handleSelect = (index) => {
         setSelected(prev => prev === index ? -1 : index)
     }

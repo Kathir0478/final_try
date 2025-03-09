@@ -60,11 +60,23 @@ const Startworkout = () => {
     }
     useEffect(() => {
         if (!token) {
-            navigate("/error")
+            navigate("/");
+            return;
         }
-        fetchdata()
-        update({ reward: 50 })
-    }, [])
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const timeLeft = payload.exp * 1000 - Date.now();
+        if (timeLeft <= 0) {
+            localStorage.removeItem("token");
+            navigate("/");
+        } else {
+            setTimeout(() => {
+                localStorage.removeItem("token");
+                navigate("/");
+            }, timeLeft);
+        }
+        fetchdata();
+        update({ reward: 50 });
+    }, [navigate, token]);
     return (
         <div className='bg-gray-950 w-screen h-screen text-white flex flex-col'>
             <div className='w-full h-20 bg-gray-950 flex justify-between px-10 py-15'>

@@ -18,10 +18,10 @@ const App = () => {
                 <Route path='/signup' element={<Signup />} />
                 <Route path='/updatedata' element={<Updatedata />} />
                 <Route path='/setdata' element={<Setdata />} />
-                <Route path='/error' element={<Accessdenied />} />
                 <Route path='/workoutplan' element={<Workouts />} />
                 <Route path='/session' element={<Startworkout />} />
                 <Route path='/profile' element={<Profile />} />
+                <Route path='/error' element={<Accessdenied />} />
             </Routes>
         </BrowserRouter>
     )

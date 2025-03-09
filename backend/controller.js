@@ -15,7 +15,7 @@ async function login(req, res) {
         if (!isMatch) {
             return res.status(401).json({ "message": "Incorrect password. Please try again." });
         }
-        const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+        const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
         return res.status(200).json({ "message": "Login Successful", "token": token });
     } catch (error) {
         return res.status(500).json({ "message": "Internal Server Error", "error": error.message });
@@ -33,7 +33,7 @@ async function signup(req, res) {
         data.progress = 0;
         data.visits = 0;
         const newUser = await User.create(data);
-        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
         return res.status(201).json({ "message": "Signup successful", "token": token, "data": newUser });
     } catch (error) {
         return res.status(500).json({ "message": "Internal Server Error", "error": error.message });

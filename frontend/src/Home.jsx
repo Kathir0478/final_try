@@ -20,8 +20,24 @@ const Home = () => {
         setUser(result.data.email)
     }
     useEffect(() => {
-        fetchData()
-    }, [])
+        if (!token) {
+            setUser("");
+            return;
+        }
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const timeLeft = payload.exp * 1000 - Date.now();
+        if (timeLeft <= 0) {
+            localStorage.removeItem("token");
+            setUser("")
+            return;
+        } else {
+            setTimeout(() => {
+                localStorage.removeItem("token");
+                setUser("")
+            }, timeLeft);
+        }
+        fetchData();
+    }, [navigate, token]);
     const logout = () => {
         setShowout(false)
         localStorage.removeItem('token')

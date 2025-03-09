@@ -36,10 +36,22 @@ const Updatedata = () => {
     }
     useEffect(() => {
         if (!token) {
-            navigate("/error")
+            navigate("/");
+            return;
         }
-        fetchdata()
-    }, [])
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const timeLeft = payload.exp * 1000 - Date.now();
+        if (timeLeft <= 0) {
+            localStorage.removeItem("token");
+            navigate("/");
+        } else {
+            setTimeout(() => {
+                localStorage.removeItem("token");
+                navigate("/");
+            }, timeLeft);
+        }
+        fetchdata();
+    }, [navigate, token]);
     function validate() {
         if (Number(moddata.age) < 18 || Number(moddata.age) > 100 || !moddata.age) {
             toast.warning("Enter valid age", ToastOpt)

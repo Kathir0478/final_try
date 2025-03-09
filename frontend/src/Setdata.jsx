@@ -13,12 +13,25 @@ const Setdata = () => {
     const verifyapi = demo.verify
     const [moddata, setmoddata] = useState({ age: "", gender: "", height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
     const token = localStorage.getItem("token")
+
     useEffect(() => {
         if (!token) {
-            navigate("/error")
+            navigate("/");
+            return;
         }
-        verify()
-    }, [])
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const timeLeft = payload.exp * 1000 - Date.now();
+        if (timeLeft <= 0) {
+            localStorage.removeItem("token");
+            navigate("/");
+        } else {
+            setTimeout(() => {
+                localStorage.removeItem("token");
+                navigate("/");
+            }, timeLeft);
+        }
+        verify();
+    }, [navigate, token]);
     async function verify() {
         try {
             const user = await axios.get(verifyapi, {

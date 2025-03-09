@@ -33,10 +33,23 @@ const Profile = () => {
     }
     useEffect(() => {
         if (!token) {
-            navigate("/error")
+            navigate("/");
+            return;
         }
-        fetchdata()
-    }, [token])
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const timeLeft = payload.exp * 1000 - Date.now();
+        if (timeLeft <= 0) {
+            localStorage.removeItem("token");
+            navigate("/");
+        } else {
+            setTimeout(() => {
+                localStorage.removeItem("token");
+                navigate("/");
+            }, timeLeft);
+        }
+        fetchdata();
+    }, [navigate, token]);
+
     return (
         <div className='w-full min-h-screen h-full bg-gray-950 text-white flex flex-col'>
             <div className='fixed w-full h-20 flex justify-between items-center p-20 z-10'>
