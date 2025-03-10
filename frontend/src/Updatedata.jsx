@@ -100,6 +100,7 @@ const Updatedata = () => {
         }
         catch (error) {
             toast.error(error.response?.data?.message || "Please Try again later", ToastOpt);
+            navigate('/')
         }
     }
     return (
