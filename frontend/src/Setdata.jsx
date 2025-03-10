@@ -98,8 +98,10 @@ const Setdata = () => {
             }
         } catch (error) {
             toast.error(error.response?.data?.message || "Please Try again later", ToastOpt);
+            navigate("/")
         }
     };
+    console.log(moddata)
     return (
         <motion.div initial="hidden" animate="visible" className='lg:fixed bg-fixed top-0 left-0 w-screen h-full min-h-screen flex flex-col bg-gray-950 text-white'>
             <motion.div variants={framer.outerBoxVariant} className='fixed top-0 left-0 flex justify-between p-10 z-10 bg-gray-950 w-full '>
