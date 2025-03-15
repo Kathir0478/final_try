@@ -15,7 +15,7 @@ const Setdata = () => {
     const verifyapi = demo.verify
     const [moddata, setmoddata] = useState({ age: "", gender: "", height: "", weight: "", fitlevel: "", goal: "", frequency: "", description: "" })
     const token = localStorage.getItem("token")
-
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         if (!token) {
             navigate("/");
@@ -88,114 +88,125 @@ const Setdata = () => {
         try {
             if (validate()) {
                 toast.success("Data submitted succesfully,", ToastOpt)
+                setLoading(true);
                 setTimeout(() => {
                     toast.info("Redirecting shortly...", ToastOpt)
-                }, 7000);
+                }, 5000);
                 const response = await axios.post(api, moddata, {
                     headers: { Authorization: token }
                 });
+                setLoading(false);
                 navigate("/");
+            }
+            else {
+                return;
             }
         } catch (error) {
             toast.error(error.response?.data?.message || "Please Try again later", ToastOpt);
             navigate("/")
         }
     };
-    console.log(moddata)
     return (
-        <motion.div initial="hidden" animate="visible" className='lg:fixed bg-fixed top-0 left-0 w-screen h-full min-h-screen flex flex-col bg-gray-950 text-white'>
-            <motion.div variants={framer.outerBoxVariant} className='fixed top-0 left-0 flex justify-between p-10 z-10 bg-gray-950 w-full '>
-                <div className='flex gap-10 items-center'>
-                    <IoFitnessOutline className='size-10 text-green-500' />
-                    <h2>Home<span className='text-green-500'>Pulse</span></h2>
-                </div>
-            </motion.div>
-            <form onSubmit={handleSubmit} className='lg:mt-35 flex flex-col-reverse lg:flex-row items-center gap-5 p-20 lg:py-0 lg:px-40'>
-                <motion.button variants={framer.fromBottomVariant} type='submit' className='flex w-full justify-center lg:hidden p-16'>
-                    <motion.p variants={framer.buttonOnHover} whileHover="hover" className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500 cursor-pointer'>Get Started</motion.p>
-                </motion.button>
-                <motion.div variants={framer.fromLeftVariant} className='flex-1 border-green-500 border-1 rounded-lg p-20 bg-gray-600 shadow-lg shadow-green-500'>
-                    <div variants={framer.fromLeftVariant} className='flex flex-col gap-5 '>
-                        <div className='flex gap-5 items-center'>
-                            <p className='w-56 italic'>Age </p>
-                            <input type='number' placeholder="Enter age between 18-100" name='age' value={moddata.age} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
-                        </div>
-                        <div className='flex gap-5 items-center'>
-                            <p className='w-56 italic'>Height </p>
-                            <input type='number' placeholder="Enter valid height in cm" name='height' value={moddata.height} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
-                        </div>
-                        <div className='flex gap-5 items-center'>
-                            <p className='w-56 italic'>weight </p>
-                            <input type='number' placeholder="Enter valid weight in kg" name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
-                        </div>
-                        <div className="flex gap-5 items-center">
-                            <p className="w-56 italic">Gender</p>
-                            <div className="border-1 rounded-lg border-green-500 p-2 w-full flex justify-evenly bg-gray-950">
-                                <label className="flex gap-2">
-                                    <input type="radio" name="gender" value="Male" checked={moddata.gender === "Male"} onChange={handleChange} />
-                                    Male
-                                </label>
-                                <label className="flex gap-2">
-                                    <input type="radio" name="gender" value="Female" checked={moddata.gender === "Female"} onChange={handleChange} />
-                                    Female
-                                </label>
-                            </div>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <p className='w-56 italic'>Fitness Level </p>
-                            <label className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full'>
-                                <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-950'>
-                                    <option value="">Select your current fitness level</option>
-                                    <option value="Beginner">Beginner</option>
-                                    <option value="Intermediate">Intermediate</option>
-                                    <option value="Advanced">Advanced</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <p className='w-56 italic'>Goal </p>
-                            <label className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full bg-gray-950'>
-                                <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-950 outline-none'>
-                                    <option value="">What is your goal</option>
-                                    <option value="General Fitness">General Fitness</option>
-                                    <option value="Muscle Building">Muscle Building</option>
-                                    <option value="Weight Loss">Weight Loss</option>
-                                    <option value="Flexibility Mobility">Flexibility & Mobility</option>
-                                    <option value="Cardio Endurance">Cardiovascular Endurance</option>
-                                    <option value="Mental Wellbeing">Mental Well-being</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <p className='w-56 italic'>Frequency </p>
-                            <input type='number' placeholder="Days to spend in week" name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <p className='w-56 italic'>Description </p>
-                            <textarea className='bg-gray-950 h-30 border-1 rounded-lg border-green-500 p-2 w-full pl-5 resize-none' placeholder="Any medical conditions" name='description' value={moddata.description} onChange={handleChange} />
-                        </div>
+        <motion.div initial="hidden" animate="visible" className=' bg-fixed top-0 left-0 w-full min-w-screen h-full min-h-screen flex flex-col bg-gray-950 text-white'>
+            <div>
+                <motion.div variants={framer.outerBoxVariant} className='fixed top-0 left-0 flex justify-between py-6 px-10 z-10 bg-gray-950 w-full '>
+                    <div className='flex gap-5 md:gap-10 items-center'>
+                        <IoFitnessOutline className='size-8 md:size-10 text-green-500' />
+                        <h2 className='text-2xl md:text-3xl'>Home<span className='text-green-500'>Pulse</span></h2>
                     </div>
                 </motion.div>
-                <motion.div variants={framer.fromRightVariant} className='flex-1 flex flex-col mt-14 lg:p-10 gap-10 pb-20'>
-                    <h2 className='flex flex-col'><span className='text-green-500'>Enter Your Details & </span><span>Get Your Perfect Workout Plan!</span> </h2>
-                    <p>
-                        Unlock a personalized fitness plan tailored to your goals, lifestyle, and fitness level. By entering your details, you’ll get an accurate workout plan that helps you:
-                    </p>
-                    <ul className='flex flex-col gap-3'>
-                        <li><p>Build strength & endurance effortlessly</p></li>
-                        <li><p>Stay consistent with smart progress tracking</p></li>
-                        <li><p>Achieve your goals faster with expert-backed routines</p></li>
-                    </ul>
-                    <h4 className='flex flex-col gap-2 text-center'>
-                        <span className='text-green-500'>Take the first step today!</span>
-                        <span> Let us know about you and transform together</span>
-                    </h4>
-                    <button type='submit' className=' hidden lg:flex w-full justify-center '>
-                        <motion.p variants={framer.buttonOnHover} whileHover="hover" className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500 cursor-pointer'>Get Started</motion.p>
-                    </button>
-                </motion.div>
-                <ToastContainer />
-            </form >
+                {loading && (
+                    <div className="fixed inset-0 bg-gray-950 bg-opacity-75 flex items-center justify-center z-50">
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-500"></div>
+                    </div>
+                )}
+                <form onSubmit={handleSubmit} className='lg:fixed flex flex-col-reverse lg:flex-row items-center gap-5 p-10 md:p-20'>
+                    <motion.button variants={framer.fromBottomVariant} type='submit' className='flex w-full justify-center lg:hidden p-8'>
+                        <motion.p variants={framer.buttonOnHover} whileHover="hover" className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500 cursor-pointer font-bold'>Get Started</motion.p>
+                    </motion.button>
+                    <motion.div variants={framer.fromLeftVariant} className='flex-1 w-full border-green-500 border-1 rounded-lg p-5 md:p-10 md:pb-10 bg-gray-600 shadow-lg shadow-green-500'>
+                        <div variants={framer.fromLeftVariant} className='flex flex-col gap-3 md:gap-6 text-xs p-3'>
+                            <div className='flex gap-5 items-center'>
+                                <p className='w-50 italic md:text-xl'>Age<span className='text-red-500'>*</span> </p>
+                                <input type='number' placeholder="Enter your age" name='age' value={moddata.age} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                            </div>
+                            <div className='flex gap-5 items-center'>
+                                <p className='w-50 italic md:text-xl'>Height<span className='text-red-500'>*</span> </p>
+                                <input type='number' placeholder="Enter your height(cm)" name='height' value={moddata.height} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                            </div>
+                            <div className='flex gap-5 items-center'>
+                                <p className='w-50 italic md:text-xl'>weight<span className='text-red-500'>*</span> </p>
+                                <input type='number' placeholder="Enter your weight(kg)" name='weight' value={moddata.weight} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5 w-full appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                            </div>
+                            <div className="flex gap-5 items-center">
+                                <p className="w-50 italic md:text-xl">Gender<span className='text-red-500'>*</span></p>
+                                <div className="border-1 rounded-lg border-green-500 p-2 w-full flex justify-around bg-gray-950">
+                                    <label className="flex gap-1">
+                                        <input type="radio" name="gender" value="Male" checked={moddata.gender === "Male"} onChange={handleChange} />
+                                        Male
+                                    </label>
+                                    <label className="flex gap-1">
+                                        <input type="radio" name="gender" value="Female" checked={moddata.gender === "Female"} onChange={handleChange} />
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+                            <div className='flex items-center gap-5'>
+                                <p className='w-50 italic md:text-xl'>Fitness Level<span className='text-red-500'>*</span> </p>
+                                <label className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 pl-5  w-full'>
+                                    <select name='fitlevel' value={moddata.fitlevel} onChange={handleChange} className='w-full outline-none bg-gray-950'>
+                                        <option value="">Fitness level</option>
+                                        <option value="Beginner">Beginner</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Advanced">Advanced</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div className='flex items-center gap-5'>
+                                <p className='w-50 italic md:text-xl'>Goal<span className='text-red-500'>*</span> </p>
+                                <label className='border-1 rounded-lg border-green-500 p-2 pl-5 w-full bg-gray-950'>
+                                    <select name='goal' value={moddata.goal} onChange={handleChange} className='w-full bg-gray-950 outline-none'>
+                                        <option value="">Your goal</option>
+                                        <option value="General Fitness">General Fitness</option>
+                                        <option value="Muscle Building">Muscle Building</option>
+                                        <option value="Weight Loss">Weight Loss</option>
+                                        <option value="Flexibility Mobility">Flexibility & Mobility</option>
+                                        <option value="Cardio Endurance">Cardiovascular Endurance</option>
+                                        <option value="Mental Wellbeing">Mental Well-being</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div className='flex items-center gap-5'>
+                                <p className='w-50 italic md:text-xl'>Frequency<span className='text-red-500'>*</span> </p>
+                                <input type='number' placeholder="Days per week" name='frequency' value={moddata.frequency} onChange={handleChange} className='bg-gray-950 border-1 rounded-lg border-green-500 p-2 w-full pl-5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                            </div>
+                            <div className='flex items-center gap-5'>
+                                <p className='w-50 italic md:text-xl'>Description </p>
+                                <textarea className='bg-gray-950 h-20 border-1 rounded-lg border-green-500 p-2 w-full pl-5 resize-none' placeholder="Any medical conditions" name='description' value={moddata.description} onChange={handleChange} />
+                            </div>
+                        </div>
+                    </motion.div>
+                    <motion.div variants={framer.fromRightVariant} className='flex-1 flex flex-col mt-16 lg:p-10 gap-10 pb-10'>
+                        <h2 className='flex flex-col text-xl md:text-2xl'><span className='text-green-500'>Enter Your Details & </span><span>Get Your Perfect Workout Plan!</span> </h2>
+                        <p>
+                            Unlock a personalized fitness plan tailored to your goals, lifestyle, and fitness level. By entering your details, you’ll get an accurate workout plan that helps you:
+                        </p>
+                        <ul className='flex flex-col gap-3'>
+                            <li><p>Build strength & endurance effortlessly</p></li>
+                            <li><p>Stay consistent with smart progress tracking</p></li>
+                            <li><p>Achieve your goals faster with expert-backed routines</p></li>
+                        </ul>
+                        <h4 className='flex flex-col gap-2 text-center text-xl md:text-2xl'>
+                            <span className='text-green-500'>Take the first step today!</span>
+                            <span> Let us know about you and transform together</span>
+                        </h4>
+                        <button type='submit' className=' hidden lg:flex w-full justify-center '>
+                            <motion.p variants={framer.buttonOnHover} whileHover="hover" className='w-fit border-1 rounded-xl border-green-500 p-4 shadow-lg shadow-green-500 cursor-pointer'>Get Started</motion.p>
+                        </button>
+                    </motion.div>
+                    <ToastContainer />
+                </form >
+            </div>
         </motion.div >
     )
 }
