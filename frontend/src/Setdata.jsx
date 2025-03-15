@@ -96,7 +96,7 @@ const Setdata = () => {
                 const response = await axios.post(api, moddata, {
                     headers: { Authorization: token }
                 });
-                console.log("end")
+                console.log(response.data)
                 setLoading(false);
                 setTimeout(() => {
                     navigate("/");
