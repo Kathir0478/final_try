@@ -89,12 +89,14 @@ const Setdata = () => {
             if (validate()) {
                 toast.success("Data submitted succesfully,", ToastOpt)
                 setLoading(true);
-                setTimeout(() => {
-                    toast.info("Redirecting shortly...", ToastOpt)
-                }, 5000);
+                // setTimeout(() => {
+                //     toast.info("Redirecting shortly...", ToastOpt)
+                // }, 5000);
+                console.log("Start")
                 const response = await axios.post(api, moddata, {
                     headers: { Authorization: token }
                 });
+                console.log("end")
                 setLoading(false);
                 navigate("/");
             }
