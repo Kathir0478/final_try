@@ -98,9 +98,6 @@ const Setdata = () => {
                 });
                 console.log(response.data)
                 setLoading(false);
-                setTimeout(() => {
-                    navigate("/");
-                }, 3000); // Redirect after 3s
             }
         } catch (error) {
             toast.error(error.response?.data?.message || "Please try again later", ToastOpt);
