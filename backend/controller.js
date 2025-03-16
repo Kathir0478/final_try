@@ -1,7 +1,6 @@
 const User = require('./user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
 const axios = require('axios')
 
 async function login(req, res) {
@@ -59,7 +58,7 @@ async function getdata(req, res) {
 
 async function update(req, res) {
     try {
-        const api = process.env.GEN_AI_API_KEY
+        const api = "https://final-try-py.onrender.com"
         if (!req.user || !req.user.id) {
             return res.status(403).json({ "message": "Access denied. No token provided." });
         }

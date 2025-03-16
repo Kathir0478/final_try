@@ -168,10 +168,10 @@ const Home = () => {
                         </div>
                     </div>
                 </motion.div>
-                <motion.h4 variants={framer.enterExitSideVariant} className='flex flex-col items-center pb-10 text-center text-xl md:text-2xl gap-2'>
-                    <h4 className='text-green-500 italic font-bold'>Your body achieves what your mind believes.</h4>
-                    <h4 className='italic font-bold'>Start your fitness journey today one rep at a time!</h4>
-                </motion.h4>
+                <motion.h3 variants={framer.enterExitSideVariant} className='flex flex-col items-center pb-10 text-center text-xl md:text-2xl gap-2'>
+                    <p className='text-green-500 italic font-bold'>Your body achieves what your mind believes.</p>
+                    <p className='italic font-bold'>Start your fitness journey today one rep at a time!</p>
+                </motion.h3>
             </div>
         </motion.div >
     )
