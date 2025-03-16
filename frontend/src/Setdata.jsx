@@ -93,6 +93,7 @@ const Setdata = () => {
                     toast.info("Redirecting shortly...", ToastOpt)
                 }, 5000);
                 console.log("Start")
+                console.log(api)
                 const response = await axios.post(api, moddata, {
                     headers: { Authorization: token }
                 });
@@ -103,9 +104,9 @@ const Setdata = () => {
             toast.error(error.response?.data?.message || "Please try again later", ToastOpt);
 
             // Delay navigation on error as well
-            setTimeout(() => {
-                navigate("/");
-            }, 3000);
+            // setTimeout(() => {
+            //     navigate("/");
+            // }, 3000);
         }
     };
     return (
