@@ -12,6 +12,7 @@ const Home = () => {
     const [showout, setShowout] = useState(false)
     const [open, setOpen] = useState(false)
     const [user, setUser] = useState("")
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const api = demo.getdata
     const token = localStorage.getItem("token")
@@ -24,13 +25,16 @@ const Home = () => {
     useEffect(() => {
         if (!token) {
             setUser("");
+            setLoading(false)
             return;
         }
+        setLoading(true)
         const payload = JSON.parse(atob(token.split(".")[1]));
         const timeLeft = payload.exp * 1000 - Date.now();
         if (timeLeft <= 0) {
             localStorage.removeItem("token");
             setUser("")
+            setLoading(false)
             return;
         } else {
             setTimeout(() => {
@@ -38,6 +42,7 @@ const Home = () => {
                 setUser("")
             }, timeLeft);
         }
+        setLoading(false)
         fetchData();
     }, [navigate, token]);
     const logout = () => {
@@ -62,6 +67,11 @@ const Home = () => {
                     <MdMenuOpen className={`size-8 mr-10 my-8 cursor-pointer ${open ? "rotate-90" : "rotate-0"} transition-all duration-500`} />
                 </motion.button>
             </div>
+            {loading && (
+                <div className="fixed inset-0 bg-gray-950 bg-opacity-75 flex items-center justify-center z-50">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-500"></div>
+                </div>
+            )}
             <motion.nav variants={framer.outerBoxVariant} className={`lg:flex justify-center lg:flex-row ${open ? 'flex flex-col top-10 h-screen justify-center p-10' : 'hidden'} items-start fixed lg:top-0 lg:left-0 w-full lg:justify-end gap-10 lg:gap-20 lg:h-30 p-10 z-2 bg-gray-950 text-2xl md:text-xl`}>
                 <IoFitnessOutline className='hidden lg:flex size-10 text-green-500' />
                 {(user && !showout) && <motion.button variants={framer.buttonOnHover} whileHover="hover" onClick={() => { navigate('/workoutplan') }}><h4 className='cursor-pointer'>Start <span className='text-green-500'>Workout</span></h4></motion.button>}
