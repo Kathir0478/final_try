@@ -4,11 +4,11 @@ import google.generativeai as genai
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
-# Initialize Flask app
+
 app = Flask(__name__)
 CORS(app)
 
-# Load API key from .env
+
 load_dotenv()
 api_key = os.getenv("GEN_AI_KEY")
 genai.configure(api_key=api_key)
@@ -58,18 +58,17 @@ def fetch():
     response = model.generate_content(prompt)
 
     try:
-        response_text = response.text.strip()  # Ensure the response is clean
+        response_text = response.text.strip()  
         
-        # ✅ Extract only the JSON part from the response
-        json_start = response_text.find('{')  # Find first {
-        json_end = response_text.rfind('}')   # Find last }
+        json_start = response_text.find('{')  
+        json_end = response_text.rfind('}')   
 
         if json_start == -1 or json_end == -1:
             raise ValueError("Response does not contain valid JSON")
 
-        json_content = response_text[json_start:json_end + 1]  # Extract JSON part
+        json_content = response_text[json_start:json_end + 1]  
 
-        # ✅ Ensure JSON parsing works
+
         workout_plan = json.loads(json_content)
 
         return jsonify({"workout_plan": workout_plan})
