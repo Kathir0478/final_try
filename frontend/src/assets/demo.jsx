@@ -1,4 +1,4 @@
-const base = "http://localhost:5000/api"
+const base = "https://final-try-backend.onrender.com/api"
 export const demo = {
     "login": `${base}/login`,
     "signup": `${base}/signup`,
